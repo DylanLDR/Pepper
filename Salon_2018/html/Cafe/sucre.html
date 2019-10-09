@@ -1,0 +1,91 @@
+/<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>sucre</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+  <script>
+/**
+ * @file cafe-sucre Pepper mail
+ * @author Franck Mérou <franck.merou@cmultiserv.com>
+ *
+ 		/**
+ 		* variable session type QiSession
+ 		*
+ 		*/
+    var Foui, Fnon, retour;
+    var host = "192.168.1.181";
+    function connected() {
+      console.log("connected");
+    }
+
+    function disconnected() {
+      console.log("disconnected");
+    }
+
+    QiSession(function(session) {
+      connected();
+
+      Fnon = function sampleButtonClickedNon() {
+        //document.body.style.backgroundColor = "red";
+        this.service("ALMemory").then(function (ALMemory) {
+          console.log("ALMemoryyolooooo");
+          /* leve l'event pour le robot et envoie les infos*/
+          ALMemory.raiseEvent("fromTablette/cafee/sucre",parameters + " sucre : " + document.getElementById("non").value);
+          /* renvoie a la page d'accueil */ 
+          document.location.href="../index.html";
+        });
+      }
+
+      /*parameter recupére le choix du café de la page précédente*/
+      var parameters = location.search.substring(1).split('&');
+      //parameters.toString();
+      
+      /*
+      *fonction qui retour le choix de café avec du sucre
+      */
+      Foui = function sampleButtonClickedOui() {
+        //document.body.style.backgroundColor = "red";
+
+        this.service("ALMemory").then(function (ALMemory) {
+          //console.log("ALMemoryyolooooo");// log de test
+
+          /* leve l'event pour le robot et envoie les infos*/
+          ALMemory.raiseEvent("fromTablette/cafee/sucre",parameters + " sucre : " + document.getElementById("oui").value);
+          /* renvoie a la page d'accueil */     
+          document.location.href="../index.html";
+        });
+      }
+      /*
+      *fonction qui retour le choix de café sans sucre
+      */
+
+    }, disconnected, host);
+
+             retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+} 
+
+  </script>
+  <link rel="stylesheet" type="text/css" href="style/sucreStyle.css">
+   <input type="button" id="Home" alt="buttonMenu" name="Home"  value=Menu onclick="retour();">
+  </html>
+
+</head>
+<body>
+  <img src="img/logo.jpg">
+  <form>
+    <label>Désirez-vous du sucre?</label>
+    <br>
+    <form>
+
+     <!--input id="oui" type="image" src="oui.png" alt="OUI"/-->		
+     <input id="oui" type="button" name="oui" value="oui" onclick="Foui();" />
+
+     <!--input id="non" type="image" src="non.png" alt="NON"/-->
+     <input id="non" type="button" name="non" value="non" onclick="Fnon();" />
+
+   </form>
+   <img src="img/cafe.png"  id="cafe">

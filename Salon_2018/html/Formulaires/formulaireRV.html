@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title>TP : Un formulaire interactif</title>
+ <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+ <script src="../lib/qi.js"></script>
+ <script>
+   var host = "192.168.1.181";
+   var envoye,check;
+
+   function connected() {
+    console.log("connected");
+  }
+
+  function disconnected() {
+    console.log("disconnected");
+  }
+
+  QiSession(function(session) {
+    connected();
+
+    var mCyril = " ";
+    var mTatiana = " ";
+    var mChristelle = " ";
+    var mElodie = " ";
+    var mCommercial = " ";
+    var mEmbauche = " ";
+    var mAdministration = " ";
+    var mAutre = " ";
+
+    check = function testCheckBox(){
+
+      if(document.getElementById("Cyril").checked){
+       mCyril = " Cyril";
+     }else{
+      mCyril = " ";
+    }
+    if(document.getElementById("Christelle").checked){
+      mChristelle = "Christelle";
+    }else{
+     mChristelle = " ";
+   }
+   if(document.getElementById("Tatiana").checked){
+    mTatiana = "Tatiana";
+  }else{
+    mTatiana = " ";
+  }
+  if(document.getElementById("Elodie").checked){
+    mElodie = "Elodie";
+  }else{
+    mElodie = " ";
+  }
+  if(document.getElementById("Commercial").checked){
+    mCommercial = "entretient Commercial";
+  }else{
+    mCommercial = " ";
+  }
+  if(document.getElementById("embauche").checked){
+    mEmbauche = "entretient embauche";
+  }else{
+    mEmbauche = " ";
+  }
+  if(document.getElementById("Administration").checked){
+    mAdministration = "entretient avec l'Administration";
+  }else{
+    mAdministration = " ";
+  }
+  if(document.getElementById("Autre").checked){
+    mAutre = "Autre";
+  }else{
+    mAutre = " ";
+  }
+}
+envoye = function sampleButtonClicked() {
+  check();
+  document.body.style.backgroundColor = "red";
+
+  this.service("ALMemory").then(function (ALMemory) {
+          //console.log("");
+          ALMemory.raiseEvent("fromTablette/dataFormulaire",document.getElementById("firstName").value +" "+ document.getElementById("lastName").value +" à rendez-vous avec:"+ mCyril +" "+ mTatiana +" "+ mChristelle +" "+ mElodie +" "+"pour: " +" "+ mCommercial+" "+mEmbauche+" "+mAdministration+" "+mAutre);
+          document.location.href="../index.html"
+          // ALMemory.raiseEvent("fromTablette/lastName",document.getElementById("lastName").value);
+        });
+}
+}, disconnected, host);
+  
+</script>
+<link rel="stylesheet" type="text/css" href="style/styleFormulaireRV.css" media="all"/>
+</head>
+<body>
+
+    <figure>
+        <form action="file:///C:/Users/Cmultiserv3D/Desktop/programmation_Pepper/Programmes/Salon_2018/html/index.html">
+         <input type="hidden" name="2048"/>
+         <input type="image" src="img/fleche.png" alt="retour">
+    </form>
+
+  <input type="image" src="img/logo.jpg" style="width:30%;height:30%;">
+  <form id="myForm">
+    <table>
+      <tr> 
+        <td>
+          <label class="form_col" for="lastName">Nom :</label>
+        </td>
+        <td>
+          <input name="lastName" id="lastName" type="text"/>
+        </td>
+      </tr>
+      <br/><br/>
+      <tr>
+        <td>
+          <label class="form_col" for="firstName">Prénom :</label>
+        </td>
+        <td>
+          <input name="firstName" id="firstName" type="text"/>
+        </td>
+      </tr>
+      <br/><br/>
+      <tr>
+        <td>
+          <label class="form_col" for="firstName">Rendez-vous avec :</label> 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input name="Cyril" id="Cyril" type="checkbox" />
+          <label class="form_col" for="Cyril">&nbsp;Cyril (Directeur)</label>
+        </td>
+        <td>&nbsp;
+         <input name="Christelle" id="Christelle" type="checkbox"/>
+         <label class="form_col" for="Cyril">&nbsp;Christelle (Assistante Direction)</label>
+       </td>
+     </tr>
+     <tr>
+      <td>
+        <input name="Tatiana" id="Tatiana" type="checkbox"/>
+        <label class="form_col" for="Tatiana">&nbsp;Tatiana (Assistante Direction)</label>
+      </td>
+
+      <td>&nbsp;
+        <input name="Elodie" id="Elodie" type="checkbox" />
+        <label class="form_col" for="Cyril">&nbsp;Elodie (Responsable achat)</label>
+      </td>
+    </tr>
+  </table>
+</br></br>
+<fieldset>
+  <legend class="titre">Raison du rendez-vous</legend>
+  <ul>
+    <li>
+      <label class="rendez-vous" for="rendez-vous">
+        <input type="radio" id="Commercial" name="rendez-vous" />
+        Entretien Commercial
+      </label>
+    </li>
+    <li>
+     <label class="rendez-vous" for="rendez-vous">
+      <input type="radio" id="embauche" name="rendez-vous"/>
+      Entretien d'embauche
+    </label>
+  </li>
+  <li>
+    <label class="rendez-vous" for="rendez-vous">
+      <input type="radio" id="Administration" name="rendez-vous" />
+      Administration
+    </label>
+  </li>
+  <li>
+    <label class="rendez-vous" for="rendez-vous">
+      <input type="radio" id="Autre" name="rendez-vous" />
+      Autre
+    </label>
+  </li>
+</ul>
+</fieldset> 
+<tr>
+  <table>
+    <tr>
+      <td>
+        <h1>
+          <button class="reset" type="reset">Réinitialiser</button>
+        </h1>
+
+      </td>
+    </tr>
+  </table>
+</form>
+<h2>
+
+
+  <button class="envoyer" type="button" onclick="envoye();"> Envoyer</button>
+</h2>
+</body>
+</html>

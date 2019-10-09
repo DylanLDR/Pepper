@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Badgeuse</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+	<script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+	<script src="lib/qi.js"></script>
+
+
+	<script>
+		var session, web, retour;
+        var hostIPV4 = "164.254.171.140";
+        var hostIPV6 = "192.168.1.181";
+
+        /*Récuperation de la variable URL "[url]+?nom=test"*/
+        var position = window.location.href.indexOf('?');
+        var fin_url =window.location.href.substring(position + 1);
+        var SayName = fin_url.substr(4,);
+
+		function connected() {
+			console.log("connected");
+		}
+
+		function disconnected() {
+			console.log("disconnected");
+		}	
+
+		function dialogue() {
+		var configuration = {"bodyLanguageMode":"contextual"};
+
+			this.service("ALTabletService").then(function (ALTabletService){
+    			ALTabletService.showWebview("http://root:root@192.168.1.181/apps/salon_2018-af8e72/");
+    		});	
+    	
+
+		/*	this.service("ALBehaviorManagerProxy").then(function (ALBehaviorManagerProxy){
+    			ALBehaviorManagerProxy.runBehavior("reboot_salon-e70b8e/behavior_1");
+    		});*/	
+		
+			if(SayName == "1"){
+				this.service("ALAnimatedSpeech").then(function (ALAnimatedSpeech){
+    				ALAnimatedSpeech.say("Badgeuse démarré avec succès !", configuration);
+	    		});				
+			}
+			else if(SayName == "2"){
+				this.service("ALTextToSpeech").then(function (ALTextToSpeech){
+    				ALTextToSpeech.say("érreur, tu as déja badgé. Si ce n'est pas le cas, utilise le badge bleu et repasse ta carte.");
+	    		});				
+			}
+			else if(SayName == "debug"){
+				this.service("ALTextToSpeech").then(function (ALTextToSpeech){
+    				ALTextToSpeech.say("Tu peux repasser ta carte.");
+    			});				
+			}
+			else {
+				this.service("ALTextToSpeech").then(function (ALTextToSpeech){
+    				ALTextToSpeech.say(SayName);
+    			});	
+			}		
+		}
+
+		QiSession(function(session) {
+			connected();
+			dialogue();
+		}, disconnected, hostIPV6);
+
+	</script>
+</head> 
+<body>
+	<center>Tu as Badgé !</center>
+</body>

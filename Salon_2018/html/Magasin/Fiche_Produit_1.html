@@ -1,0 +1,88 @@
+/<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>sucre</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+  <script>
+/**
+ * @file cafe-sucre Pepper mail
+ * @author Franck Mérou <franck.merou@cmultiserv.com>
+ *
+ 		/**
+ 		* variable session type QiSession
+ 		*
+ 		*/
+    var Foui, Fnon, retour;
+    var host = "192.168.1.181";
+    function connected() {
+      console.log("connected");
+    }
+
+    function disconnected() {
+      console.log("disconnected");
+    }
+
+    QiSession(function(session) {
+      connected();
+      Fiche_Produit_1();
+
+}, disconnected, host);
+
+function Fiche_Produit_1() {
+
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("produit", 1
+        );
+    });
+}
+
+panier1 = function Panier_1() {
+    document.location.href="Panier_1.html"
+}
+
+  </script>
+  <link rel="stylesheet" type="text/css" href="style/styleNocibe.css">
+
+
+</head>
+<body>
+ <a class="boutons-retour" href="Produit.html">Retour</a>
+  <center><img src="img/nocibe.png"></center>
+  <form>
+      </br></br>
+    <center><label>Mascara Volume Effet faux Cils</label>
+<figure>
+      <table>
+
+<tr>
+  <td>
+     <!--input id="oui" type="image" src="oui.png" alt="OUI"/-->		
+           <input type="image" src="img/Produit_1.jpg" alt="produit">
+</td>
+<td>
+
+            <center><p></p>
+          </br></br>
+<div class="resume">Oubliez le recourbe-cils. Grâce à sa brosse inédite et sa formule exclusive au pouvoir recourbant, le nouveau Mascara Volume Effet faux Cils The Curler s’occupe de tout : courbe, volume, longueur. </br></br>
+
+Sa double brosse brevetée bi-matière permet d’étirer, allonger, recourber. Une brosse arrondie en fibres noires, arrondie pour charger les cils de matière et donner du volume. De l’autre, un peigne rose incurvé en élastomère pour recourber, définir les cils.</br></br>
+
+Sa texture densifie le volume instantanément et indéfiniment. Sa formule, infusée de trois huiles nourrit les cils et leur assure douceur, souplesse et brillance tout au long de la journée. </br></br>
+
+Les cils déjouent les lois de la gravité sous l’effet lift-up de la formule. Volume défini et courbes renversantes. Une signature du regard inédite.</div>
+</br></br>
+
+                     <p class="prix">Prix: 24,43€</p>
+
+                       </br></br>
+                     <input type="button" class="boutons" value="Ajouter au Panier" onclick="panier1();">
+                   </td>
+                 </tr>
+
+
+</table>
+</figure>
+  </html>

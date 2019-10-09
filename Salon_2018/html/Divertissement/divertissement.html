@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title>Games</title>
+
+  <script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+ <script>
+
+/*
+* 
+***/
+  var session, retour;
+  var host = "192.168.1.181";
+    function connected() {
+        console.log("connected");
+    }
+
+    function disconnected() {
+        console.log("disconnected");
+    }
+   QiSession(function(s) {
+			connected();
+			session = s;
+			/*sampleButtonClickedDance();
+			sampleButtonClickedEgnime();
+			sampleButtonClickedChant();
+			sampleButtonClickedHome();*/
+		}, disconnected, host);
+/*
+* fonction qui appel les danse du robot
+*Statut: actif
+***/
+ function sampleButtonClickedDance() {
+    this.service("ALMemory").then(function (ALMemory) {
+      ALMemory.raiseEvent("fromTablette/dance",document.getElementById("dance").value);
+    });
+  }
+/*
+* fonction qui appel les chant
+* Statut:Abondoné pour le moment
+***/
+  function sampleButtonClickedChant() {
+   this.service("ALMemory").then(function (ALMemory) {
+    ALMemory.raiseEvent("fromTablette/dance",document.getElementById("chant").value);
+  });
+ }
+/*
+*fonction qui appel egnime
+*Statut: actif
+***/
+ function sampleButtonClickedEgnime() {
+   this.service("ALMemory").then(function (ALMemory) {
+    ALMemory.raiseEvent("fromTablette/enigme",document.getElementById("enigme").value);
+    document.location.href="../index.html";     
+  });
+ }
+/*
+*fonction qui demande au robot de stopper les divertissements et renvoie à l'acueil
+*Statut: actif
+***/
+ function sampleButtonClickedHome() {
+   this.service("ALMemory").then(function (ALMemory) {
+    ALMemory.raiseEvent("fromTablette/divertissementStop",1);
+  });
+ }
+
+/*
+* fonction qui appel les video du robot
+*Statut: actif
+***/
+ function PlayVideo() {
+    this.service("ALMemory").then(function (ALMemory) {
+      ALMemory.raiseEvent("fromTablette/videos/France_3",document.getElementById("videos").value);
+    });
+  }
+
+   retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+}
+
+</script>
+<link rel="stylesheet" type="text/css" href="style/styleDivertissement.css">
+</head>
+<body>
+
+    <input type="button" id="Home" alt="buttonMenu" name="Home"  value=Menu onclick="retour();">    
+    <center><img src="img/logo.jpg" class="cmultiserv"></center>
+
+
+</br></br>
+  <form action="html/index.html">
+         <input type="hidden" name="2048"/>
+<br></br>
+  </form>
+  <figure>
+    <table>
+      <tr>
+ 
+            <form action="2048.html">
+            <input type="hidden" name="2048"/>
+            <input type="image"  class="premier" src="img/2048.png" alt="2048" action="2048.html">
+            </form>
+      <tr>
+            <form action="tetris.html">
+            <input type="hidden" name="tetris"/>
+            <input type="image" class="tetris" src="img/tetris.png" alt="tetris"  action="tetris.html">
+            </form>
+      <tr>
+            <form action="puissance4.html">
+            <input type="hidden" name="Puissance4"/>
+            <input type="image"  class="puissance" src="img/Puissance4.png" alt="Puissance4" action="puissance4.html">
+            </form> 
+      </tr>
+    </table>
+    <table>
+           </td>
+      </tr>
+  </table>
+  <!--   <table>
+        </td>
+       <td>
+          <form>
+            <img src="img/reflechi.gif" id="enigme">
+            <input type="button" class="enigme" value="enigme" name="enigme" onclick="sampleButtonClickedEgnime();"/>
+          </form>
+        </td>
+
+      </tr>
+    </table>-->
+ </figure>
+</body>
+</html>

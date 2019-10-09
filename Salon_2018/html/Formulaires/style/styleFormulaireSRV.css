@@ -1,0 +1,95 @@
+body{
+                /*background-image: url("default.jpg");
+                 background-repeat: no-repeat;
+                  background-size:cover;*/
+              }
+          form { 
+
+                margin-left: 30%;
+         }
+         
+         /*input,label{
+             font-size: 2em;
+             color: #003333;
+         }*/
+
+        fieldset{
+          width: 50%;
+        }
+
+        .titre{
+          font-size: 2em;
+        }
+
+        .rendez-vous{
+          font-size: 1.5em;
+        }
+         
+        .form_col{
+          font-size: 2em;
+        }
+
+        #firstName{
+          font-size: 2em;
+        }
+
+        #lastName{
+          font-size: 2em;
+        }
+
+    button{
+      -moz-box-shadow: 3px 4px 0px 0px #899599;
+      -webkit-box-shadow: 3px 4px 0px 0px #899599;
+      box-shadow: 3px 4px 0px 0px #899599;
+      background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bab1ba));
+      background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+      background:-webkit-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+      background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+      background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+      background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
+      background-color:#ededed;
+      -moz-border-radius:15px;
+      -webkit-border-radius:15px;
+      border-radius:15px;
+      border:1px solid #d6bcd6;
+      display:inline-block;
+      color:#003333;
+    }
+    
+
+    .envoyer{
+      font-size: 1.2em;
+	  margin-left :-17%;
+    }
+
+    .accueil{
+      font-size: 1.2em;
+    }
+
+    .reset{
+      font-size: 1em;
+    }
+
+h1{
+	margin-left: 125%;
+  
+
+	
+}
+
+h2{
+	margin-left: 49%;
+}
+
+input[type="radio" i] {
+   
+	width:30px;
+    height:30px;
+}
+
+input[type="checkbox" i] {
+    width:30px;
+    height:30px;
+}
+

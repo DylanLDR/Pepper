@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title>Formulaire RSE</title>
+ <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+ <script src="../lib/qi.js"></script>
+ <script src="js/RSE.js"></script>
+
+ <script>
+   var host = "192.168.1.181";
+   var envoye,check,retour;
+
+   function connected() {
+    console.log("connected");
+  }
+
+  function disconnected() {
+    console.log("disconnected");
+  }
+
+  QiSession(function(session) {
+    connected();
+}, disconnected, host);
+
+    var pFrance = " ";
+    var varTransport  = " ";
+    var varVille = " ";
+    var varCP = " ";
+
+    check = function testCheckBox(){
+
+
+
+    if(document.getElementById("pied_Q2").checked){
+       varTransport = " à pied";
+     }else{
+      varTransport = " ";
+    }
+
+    if(document.getElementById("velo_Q2").checked){
+       varTransport = " Vélo";
+     }else{
+      varTransport = " ";
+    }
+
+    if(document.getElementById("moto_Q2").checked){
+      varTransport = " Moto";
+    }else{
+     varTransport = " ";
+   }
+
+    if(document.getElementById("bus_Q2").checked){
+       varTransport = " Auto-bus";
+     }else{
+      varTransport = " ";
+    }
+
+    if(document.getElementById("voiture_Q2").checked){
+      varTransport = " Voiture";
+    }else{
+     varTransport = " ";
+   }
+
+    if(document.getElementById("co_voiturage_Q2").checked){
+       varTransport = " Co-Voiturage";
+     }else{
+      varTransport = " ";
+    }
+
+    if(document.getElementById("e_voiture_Q2").checked){
+      varTransport = " Voiture électrique";
+    }else{
+     varTransport = " ";
+   }
+
+    if(document.getElementById("France").checked){
+       pFrance = " France";
+     }else{
+      pFrance = " ";
+    }
+
+    varVille = document.getElementById("ville").value;
+    varCP = document.getElementById("code").value;
+
+}
+
+
+envoye = function sampleButtonClicked() {
+  check();
+  document.body.style.backgroundColor = "green";
+
+  this.service("ALMemory").then(function (ALMemory) {
+          //console.log("");
+          ALMemory.raiseEvent("fromTablette/dataFormulaire", "Formulaire de Satisfaction CMultiserv" + " \r\n\n"
+
+            +"Nom: " +document.getElementById("firstName").value +" \r\n"+ "Prénom: " + document.getElementById("lastName").value+ " \r\n" + "Société: " + document.getElementById("Societe").value + " \r\n\n"
+
+            +"Pays: "+ pFrance + " " + document.getElementById("autre").value + " \r\n" 
+
+            +"Ville:"+ varVille + ", Code Postale:" + varCP 
+
+            + "Transport:" + varTransport +"\r\n"
+            );
+          document.location.href="../index.html"
+          // ALMemory.raiseEvent("fromTablette/lastName",document.getElementById("lastName").value);
+        });
+}
+
+retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+}
+
+  
+</script>
+
+<link rel="stylesheet" type="text/css" href="style/styleFormulaireCMultiserv.css" media="all"/>
+</head>
+
+<body>
+
+  <button class="button-menu" type="button" onclick="retour();">Menu</button>
+    <br></br>
+<img src="img/logo.jpg" style="width:50%;height:30%;">
+    <div class="align-form">
+  <div class="page-center">
+  <form id="myForm">
+    <table>
+      <div>
+          <label class="form_col" for="lastName">Nom:</label>
+          <input name="lastName" id="lastName" type="text"/><br></br>
+          <label class="form_col" for="firstName">Prénom:</label>
+          <input name="firstName" id="firstName" type="text"/>     <br></br>
+      </div>
+
+      <div>
+          <label class="form_col" for="firstName">Entreprise/Association:</label>
+          <input name="firstName" id="Societe" type="text"/>     <br></br>
+      </div>
+
+      <br></br>
+      <div>
+          <label class= "titre" >1) Vous venez de:</label>
+      </div>
+      <div>
+        <div class="align-checkbox">  
+          <input name="Pays" type="checkbox" id="France" onclick="Check_Fr()"style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;France</label>
+          <p id="fr_v" style="display:none">
+              <label class="form_col" for="Pays">&nbsp;Ville:</label>
+              <input name="Ville" id="ville" type="text"/>
+          </p>
+
+          <p id="fr_cp" style="display:none">
+              <label class="form_col" for="Pays">&nbsp;Code postale:</label>
+              <input name="Code" id="code" type="text"/>
+          </p>
+
+        </div>
+
+        <div class="align-checkbox">  
+          <input name="Pays" type="checkbox" id="Autre" onclick="Check_Autre()"style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Autre</label>
+          <p id="other" style="display:none">
+              <label class="form_col" for="Pays">&nbsp;Pays:</label>
+              <input name="autre" id="autre" type="text"/>
+          </p>
+        </div>
+
+          <br></br>    
+
+  <label class= "titre">2) Quelle est votre mode de transport ?</label>
+        <div>
+
+            <input type="radio" id="pied_Q2" name="drone" checked style="width:40px; height:40px;" />
+            <label class="form_col" for="q1b">À pied</label>
+          
+            <input type="radio" id="velo_Q2" name="drone" checked style="width:40px; height:40px;" />
+            <label class="form_col" for="q1b">Vélo</label>
+            
+            <input type="radio" id="moto_Q2" name="drone" style="width:40px; height:40px;"/>
+            <label class="form_col" for="q1b">Moto</label>
+
+            <input type="radio" id="bus_Q2" name="drone" style="width:40px; height:40px;"/>
+            <label class="form_col" for="q1b">Auto-bus</label>
+        </div>      
+        <div>
+            <input type="radio" id="voiture_Q2" name="drone" style="width:40px; height:40px;"/>
+            <label class="form_col" for="q1b">Voiture</label>
+
+            <input type="radio" id="co_voiturage_Q2" name="drone" style="width:40px; height:40px;"/>
+            <label class="form_col" for="q1b">Co-Voiturage</label>
+
+            <input type="radio" id="e_voiture_Q2" name="drone" style="width:40px; height:40px;"/>
+            <label class="form_col" for="q1b">Voiture électrique</label>
+        </div>
+  </table>
+
+</br></br>
+
+<tr>
+  <table>
+    <tr>
+      <td>
+
+          <button class="button-reset" type="reset">Réinitialiser</button>
+          <button class="button-confirm" type="button" onclick="envoye();">Envoyer</button>
+      </td>
+    </tr>
+  </table>
+</form>
+</div>
+</div>
+
+</body>
+</html>
+

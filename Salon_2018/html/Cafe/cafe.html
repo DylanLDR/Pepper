@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+/<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>sucre</title>
+  <script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+  <script>
+/**
+ * @file cafe-sucre Pepper mail
+ * @author Franck Mérou <franck.merou@cmultiserv.com>
+ *
+    /**
+    * variable session type QiSession
+    *
+    */
+    var Foui, Fnon, retour;
+    var host = "192.168.1.181";
+    function connected() {
+      console.log("connected");
+    }
+
+    function disconnected() {
+      console.log("disconnected");
+    }
+
+    QiSession(function(session) {
+      connected();
+
+
+    }, disconnected, host);
+
+
+    retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+}
+    
+  </script>
+  <head>
+    <meta charset="utf-8" />
+    <title>selection café</title>
+    <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
+    <script>
+    </script>
+    <link rel="stylesheet" type="text/css" href="style/styleCafe.css" media="all"/>
+  </head>
+  <body>
+  	<figure>
+         <input type="button" id="Home" alt="buttonMenu" name="Home"  value="Menu" onclick="retour();">
+      <center><input type="image" src="img/logo.jpg" style="width:30%;height:30%;"></center>
+      <h1>Café Caramel</h1>
+      <form action="sucre.html">
+      <table>
+        <tr>
+          <td>
+            <h2>Espresso Caramel est un café aromatisé élaboré à partir de l’Espresso Forte, un mélange complexe et très torréfié d’Arabicas d’Amérique Centrale et du Sud. La saveur caramel adoucit les notes torréfiées. Un mariage tendre et gourmand qui évoque le sucre brun</h2>
+          </td>
+          <td>
+            <input type="hidden" name="cafe" value="Cafe Caramel" /> 
+            <input type="image" src="img/cafeCaramel.png" alt="Caramel">
+          </td>
+        </tr>
+      </table>
+      </form>  
+    </figure>
+  	<figure>
+      <h1>Café Vanille</h1>
+      <form action="sucre.html">
+      <table>
+        <tr>
+          <td>
+            <h2>Espresso Vanilla est un café aromatisé élaboré à partir de l’Espresso Forte, un mélange complexe et très torréfié d’Arabicas d’Amérique Centrale et du Sud. Ce mariage équilibré entre la douceur de la vanille et le profil complexe de l’Espresso Forte donne à ce café une note infiniment douce et soyeuse en bouche.</h2>
+          </td>
+          <td>
+            <input type="hidden" name="cafe"  value="Cafe Vanille" />
+            <input type="image" src="img/vanille.png" alt="Vanille">
+          </td>
+        </tr>
+      </table>
+      </form>  
+  	</figure>
+  	<figure>
+      <h1>Café long leger</h1>
+      <form action="sucre.html">
+      <table>
+        <tr>
+          <td>
+            <h2>Alliance délicate d’Arabicas d’Afrique de l’Est, d’Amérique Centrale et du Sud, très légèrement torréfiés, Lungo Leggero est très aromatique avec son délicat bouquet de notes fleuries rappelant le jasmin.</h2>
+          </td>
+          <td>
+            <input type="hidden" name="cafe"  value="Cafe Long Leger" />
+            <input type="image" src="img/lungoLeggero.png" alt="Long Leger"/>
+          </td>
+        </tr>
+      </table>
+      </form>  
+  	</figure>
+  	<figure>
+      <h1>Café long Fort</h1>
+      <form action="sucre.html">
+      <table>
+        <tr>
+          <td>
+            <h2>Mélange exclusif et complexe d’Arabicas d’Amérique Centrale et du Sud, Lungo Forte possède des notes grillées bien présentes, animées d’une subtile note fruitée.</h2>
+          </td>
+          <td>
+            <input type="hidden" name="cafe"  value="Cafe Long Fort" />
+            <input type="image" src="img/lungoForte.png" alt="Long Fort"/>
+          </td>
+        </tr>
+      </table>
+      </form>  
+  	</figure>
+  	<figure>
+      <h1>Café Decafeine</h1>
+      <form action="sucre.html">
+      <table>
+        <tr>
+          <td>
+            <h2>Mélange complexe d'Arabicas d'Amérique du Sud et d'Afrique de l'Est, Lungo Decaffeinato est un café décaféiné équilibré qui associe des notes de céréales douces et grillées à toute la subtilité des notes florales des Arabicas d’Afrique de l’Est. À déguster en tasse lungo (110 ml)</h2>
+          </td>
+          <td>
+            <input type="hidden" name="cafe"  value="Cafe Decafeine" />
+            <input type="image" src="img/decafeine.png" alt="Decafeine"/>
+          </td>
+        </tr>
+      </table>
+      </form> 
+  	</figure>
+     <figure>
+      <h1>Expresso</h1>
+      <form action="sucre.html">
+      <table>
+        <tr>
+          <td>
+            <h2>Composé exclusivement d'Arabicas d’Amérique Centrale et du Sud, cet Espresso, très torréfié possède un arôme complexe où notes très grillées et fruitées s’équilibrent harmonieusement.</h2>
+          </td>
+          <td>
+            <input type="hidden" name="cafe"  value="espresso" />
+            <input type="image" src="img/espresso.png" alt="espresso"/>
+          </td>
+        </tr>
+      </table>
+      </form> 
+  	</figure>    
+  </body>
+</html>

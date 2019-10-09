@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title>TP : Un formulaire interactif</title>
+ <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+ <script src="../lib/qi.js"></script>
+ <script>
+   var host = "192.168.1.181";
+   var envoye,check,retour;
+
+   function connected() {
+    console.log("connected");
+  }
+
+  function disconnected() {
+    console.log("disconnected");
+  }
+
+  QiSession(function(session) {
+    connected();
+}, disconnected, host);
+
+    var pFrance = " ";
+    var pBelgique = " ";
+    var pLuxembourg = " ";
+    var pPologne = " ";
+    var pEspagne = " ";
+    var pPortugal = " ";
+    var pRoyaumeUni= " ";
+    var pAllemagne = " ";
+    var pItalie = " ";
+    var pMaroc = " ";
+    var oui_Q2 = " ";
+    var non_Q2 = " ";
+    var oui_Q4 = " ";
+    var non_Q4 = " ";
+    var oui_Q5 = " ";
+    var non_Q5 = " ";
+
+    check = function testCheckBox(){
+
+
+      if(document.getElementById("oui_Q2").checked){
+       oui_Q2 = " Oui";
+     }else{
+      oui_Q2 = " ";
+    }
+
+    if(document.getElementById("non_Q2").checked){
+      non_Q2 = "Non";
+    }else{
+     non_Q2 = " ";
+   }
+
+         if(document.getElementById("oui_Q4").checked){
+       oui_Q4 = " Oui";
+     }else{
+      oui_Q4 = " ";
+    }
+
+    if(document.getElementById("non_Q4").checked){
+      non_Q4 = "Non";
+    }else{
+     non_Q4 = " ";
+   }
+
+         if(document.getElementById("oui_Q5").checked){
+       oui_Q5 = " Oui";
+     }else{
+      oui_Q5 = " ";
+    }
+
+    if(document.getElementById("non_Q5").checked){
+      non_Q5 = "Non";
+    }else{
+     non_Q5 = " ";
+   }
+
+
+      if(document.getElementById("France").checked){
+       pFrance = " France";
+     }else{
+      pFrance = " ";
+    }
+
+    if(document.getElementById("Belgique").checked){
+      pBelgique = "Begique";
+    }else{
+     pBelgique = " ";
+   }
+
+   if(document.getElementById("Luxembourg").checked){
+    pLuxembourg = "Luxembourg";
+  }else{
+    pLuxembourg = " ";
+  }
+
+  if(document.getElementById("Pologne").checked){
+    pPologne = "Pologne";
+  }else{
+    pPologne = " ";
+  }
+
+  if(document.getElementById("Espagne").checked){
+    pEspagne = "Espagne";
+  }else{
+    pEspagne = " ";
+  }
+
+  if(document.getElementById("Portugal").checked){
+    pPortugal = "Portugal";
+  }else{
+    pPortugal = " ";
+  }
+
+  if(document.getElementById("Royaume-Uni").checked){
+    pRoyaumeUni = "Royaume-Uni";
+  }else{
+    pRoyaumeUni = " ";
+  }
+
+  if(document.getElementById("Allemagne").checked){
+    pAllemagne = "Allemagne";
+  }else{
+    pAllemagne = " ";
+  }
+
+  if(document.getElementById("Italie").checked){
+    pItalie = "Italie";
+  }else{
+    pItalie = " ";
+  }
+
+    if(document.getElementById("Maroc").checked){
+    pMaroc = "Maroc";
+  }else{
+    pMaroc = " ";
+  }
+
+}
+envoye = function sampleButtonClicked() {
+  check();
+  document.body.style.backgroundColor = "green";
+
+  this.service("ALMemory").then(function (ALMemory) {
+          //console.log("");
+          ALMemory.raiseEvent("fromTablette/dataFormulaire", "Formulaire de Satisfaction CMultiserv" + " \r\n\n"
+
+            +"Nom: " +document.getElementById("firstName").value +" \r\n"+ "Prénom: " + document.getElementById("lastName").value+ " \r\n" + "Société: " + document.getElementById("Societe").value + " \r\n\n"
+
+            +"Pays Implentée(s): "+ pFrance +" "+ pBelgique +" "+ pLuxembourg +" "+ pPologne+ " " + pEspagne +" "+ pPortugal +" "+ pRoyaumeUni +" "+ pAllemagne + " "+ pItalie +" "+ pMaroc + " " + document.getElementById("autre").value + " \r\n" 
+
+            +"Satisfait  du service: "+ oui_Q2 +" "+ non_Q2 + " \r\n"
+
+            +"Amélioration: "+ document.getElementById("amelioration").value + " \r\n"
+
+            +"Intéressé pour rencontrer nos référents dans les pays: "+ oui_Q4 + " " + non_Q4 + " \r\n"
+
+            +"Faire un test avec CMultiserv dans ces pays: "+ oui_Q5 +" "+ non_Q5 + " \r\n"
+
+            +"Gestionnaire: "+ document.getElementById("gestionnaire").value + " \r\n\n"
+
+            );
+          document.location.href="../index.html"
+          // ALMemory.raiseEvent("fromTablette/lastName",document.getElementById("lastName").value);
+        });
+}
+
+retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+}
+
+  
+</script>
+<link rel="stylesheet" type="text/css" href="style/styleFormulaireCMultiserv.css" media="all"/>
+</head>
+
+<body>
+  <button class="button-menu" type="button" onclick="retour();">Menu</button>
+    <br></br>
+<img src="img/logo.jpg" style="width:50%;height:30%;">
+    <div class="align-form">
+  <div class="page-center">
+  <form id="myForm">
+    <table>
+      <tr> 
+        <td>
+          <label class="form_col" for="lastName">Nom :</label>
+          <input name="lastName" id="lastName" type="text"/><br></br>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="form_col" for="firstName">Prénom :</label>
+          <input name="firstName" id="firstName" type="text"/>     <br></br>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class="form_col" for="firstName">Société :</label>
+          <input name="firstName" id="Societe" type="text"/>     <br></br>
+        </td>
+      </tr>
+      <tr> 
+        <td>
+          <br></br>
+          <label class= "titre" >1) Dans quelle pays êtes vous implenté ?</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class= "titre" >Votre réponse:<br></br></label>
+        <div class="align-checkbox">   
+          <input name="Pays" id="France" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;France</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Belgique" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Belgique</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Luxembourg" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Luxembourg</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Espagne" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Espagne</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Portugal" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Portugal</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Italie" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Italie</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Allemagne" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Allemagne</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Royaume-Uni" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Royaume-Uni</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Pologne" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Pologne</label>
+        </div>
+        <div class="align-checkbox">   
+          <input name="Pays" id="Maroc" type="checkbox" style="width:40px; height:40px;"/>
+          <label class="form_col" for="Pays">&nbsp;Maroc</label>
+        </div>
+        
+
+<br></br>
+            <div class="align-autre">
+              <label class="form_col" for="Pays">&nbsp;Autre:</label>
+              <input name="lastName" id="autre" type="text"/>
+            </div>
+          <br></br>
+        </td>
+      </tr>
+      
+
+
+      <tr> 
+        <td>
+          <label class= "titre">2) Êtes-vous satisfait du service que vous avez?</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class= "titre" >Votre réponse:</label>
+            <input type="radio" id="oui_Q2" name="drone" checked style="width:40px; height:40px;" />
+            <label class="form_col" for="q1a">Oui</label>
+
+            <input type="radio" id="non_Q2" name="drone" style="width:40px; height:40px;"/>
+            <label class="form_col" for="q1b">Non</label>
+        </td>
+      </tr>
+
+      <tr> 
+        <td>
+          <label class= "titre"><br></br>3) Que souhaiteriez-vous voir améliorer?</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class= "titre">Votre réponse:</label>
+                    <input class="margin-input-text" name="lastName" id="amelioration" type="text"/>
+         <br></br>
+        </td>
+      </tr>
+ 
+
+
+      <tr>
+        <td><br></br>
+      <label class= "titre">4) Seriez-vous intéressé de rencontrer nos référents dans les pays?</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class= "titre" >Votre réponse:</label>
+            <input type="radio" id="oui_Q4" name="drone1" checked style="width:40px; height:40px;"/>
+            <label class="form_col" for="huey">Oui</label>
+
+            <input type="radio" id="non_Q4" name="drone1" style="width:40px; height:40px;"/>
+            <label class="form_col" for="dewey">Non</label>
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td>
+      <label class= "titre"> <br></br>5) Souhaitez-vous faire un test avec CMultiserv dans ces pays?</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class= "titre" >Votre réponse:</label>
+            <input type="radio" id="oui_Q5" name="drone2" checked style="width:40px; height:40px;"/>
+            <label class="form_col" for="huey">Oui</label>
+
+            <input type="radio" id="non_Q5" name="drone2" style="width:40px; height:40px;"/>
+            <label class="form_col" for="dewey">Non</label>
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td>
+     <label class= "titre"><br></br>6) Pouvez-vous s'il vous plaît nous envoyer ce gestionnaire de maintenance de ces pays?</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label class= "titre" >Votre réponse:</label>
+                    <input class="margin-input-text" name="lastName" id="gestionnaire" type="text"/>
+          <br></br>
+        </td>
+      </tr>
+
+  </table>
+
+</br></br>
+
+<tr>
+  <table>
+    <tr>
+      <td>
+
+          <button class="button-reset" type="reset">Réinitialiser</button>
+          <button class="button-confirm" type="button" onclick="envoye();">Envoyer</button>
+      </td>
+    </tr>
+  </table>
+</form>
+</div>
+</div>
+
+</body>
+</html>
+

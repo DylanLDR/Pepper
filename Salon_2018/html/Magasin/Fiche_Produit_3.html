@@ -1,0 +1,88 @@
+/<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>sucre</title>
+  <script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+  <script>
+/**
+ * @file cafe-sucre Pepper mail
+ * @author Franck Mérou <franck.merou@cmultiserv.com>
+ *
+    /**
+    * variable session type QiSession
+    *
+    */
+    var Foui, Fnon, retour;
+    var host = "192.168.1.181";
+    function connected() {
+      console.log("connected");
+    }
+
+    function disconnected() {
+      console.log("disconnected");
+    }
+
+    QiSession(function(session) {
+      connected();
+      Fiche_Produit_3()
+}, disconnected, host);
+
+
+function Fiche_Produit_3() {
+
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("produit", 3
+        );
+    });
+}
+
+panier3 = function Panier_3() {
+    document.location.href="Panier_3.html"
+}
+
+      
+
+  </script>
+  <link rel="stylesheet" type="text/css" href="style/styleNocibe.css">
+  </html>
+
+</head>
+<body>
+   <a class="boutons-retour" href="Produit.html">Retour</a>
+  <center><img src="img/nocibe.png"></center>
+  <form>
+      </br></br>
+    <center><label>Sì Passione</label>
+<figure>
+      <table>
+
+<tr>
+  <td>
+     <!--input id="oui" type="image" src="oui.png" alt="OUI"/-->    
+           <input type="image" src="img/Produit_3.jpg" alt="produit">
+
+<td>
+
+    <center><p></p>
+    </br></br>
+<div class="resume">Puissante réinvention de Si, fragrance emblématique d'Armani, Si Passione apporte une nouvelle dimension à la personnalité du parfum féminin de Giorgio Armani. </br></br>
+
+Avec son nectar de cassis combiné à une poire pétillante, il fait écho à la signature Si.</br></br>
+
+Il associe vanille intense et jasmin pour créer un parfum fruité floral sensuel. </br></br>
+
+Au coeur de Si Passione, le bois de cèdre, reflétant une émotion empreinte d'audace.</br></br>
+
+  <p class="prix">Prix: 63,00€</p>
+
+  </br></br>
+  </br></br>
+    <input type="button" class="boutons" value="Ajouter au Panier" onclick="panier3();">
+  </td>
+</tr>
+</table>
+</figure>
+

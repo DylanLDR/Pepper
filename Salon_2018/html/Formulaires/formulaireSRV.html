@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title>TP : Un formulaire interactif</title>
+ <script src="/libs/qimessaging/2/qimessaging.js"></script>
+ <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+ <script src="../lib/qi.js"></script>
+ <script>
+  var host = "192.168.1.181";
+  var envoye,check, home;
+  function connected() {
+    console.log("connected");
+  }
+
+  function disconnected() {
+    console.log("disconnected");
+  }
+  QiSession(function(session) {
+    connected();
+
+    var mCyril = " ";
+    var mTatiana = " ";
+    var mChristelle = " ";
+    var mElodie = " ";
+    var mCommercial = " ";
+    var mCandidature = " ";
+    
+
+    check = function testCheckBox(){
+
+      if(document.getElementById("Cyril").checked){
+       mCyril = " Cyril";
+     }else{
+      mCyril = " ";
+    }
+    if(document.getElementById("Christelle").checked){
+      mChristelle = "Christelle";
+    }else{
+     mChristelle = " ";
+     
+   }
+   
+   if(document.getElementById("Tatiana").checked){
+    mTatiana = "Tatiana";
+  }else{
+    mTatiana = " ";
+  }
+  if(document.getElementById("Elodie").checked){
+    mElodie = "Elodie";
+  }else{
+    mElodie = " ";
+  }
+  if(document.getElementById("Commercial").checked){
+    mCommercial = "Prise de contact avec un Commercial";
+  }else{
+    mCommercial = " ";
+  }
+  if(document.getElementById("spontane").checked){
+    mCandidature = " Candidature spontané";
+  }else{
+    mCandidature = " ";
+  }
+  
+}
+envoye = function sampleButtonClicked() {
+  check();
+  document.body.style.backgroundColor = "red";
+
+  this.service("ALMemory").then(function (ALMemory) {
+
+    ALMemory.raiseEvent("fromTablette/dataFormulaire",document.getElementById("firstName").value +" "+ document.getElementById("lastName").value +" souhaite un rendez-vous:"+ mCyril +" "+ mTatiana +" "+ mChristelle +" "+ mElodie +" "+"pour: " +" "+ mCommercial+" "+mCandidature+" ");
+    document.location.href="../index.html"
+  });
+}
+
+home = function sampleButtonClickedAccueil() {
+  document.body.style.backgroundColor = "blue";
+  this.service("ALMemory").then(function (ALMemory) {
+    ALMemory.raiseEvent("fromTablette/signalAccueil",true);
+    document.location.href="../index.html"
+  });
+}
+}, disconnected, host);
+
+</script>
+<link rel="stylesheet" type="text/css" href="style/styleFormulaireSRV.css" media="all"/>
+</head>
+<body>
+  <input type="image" src="img/logo.jpg" style="width:30%;height:30%;">
+  <form id="myForm">
+    <table>
+      <tr>
+        <td>
+          <label class="form_col" for="lastName">Nom :</label>
+        </td>
+        <td>
+          <input name="lastName" id="lastName" type="text"/>
+        </td>
+      </tr>
+      <br/><br/>
+      <tr>
+        <td>
+          <label class="form_col" for="firstName">Prénom :</label>
+        </td>
+        <td>
+          <input name="firstName" id="firstName" type="text"/>
+        </td>
+      </tr>
+      <br/><br/>
+      <tr>
+        <td>
+          <label class="form_col" for="firstName">Rendez-vous avec :</label> 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          
+          <input name="Cyril" id="Cyril" type="checkbox" />
+          <label class="form_col" for="Cyril">&nbsp;Cyril (Directeur)</label>
+        </td>
+        <td>&nbsp;
+         <input name="Christelle" id="Christelle" type="checkbox"/>
+         <label class="form_col" for="Cyril">&nbsp;Christelle (Assistante Direction)</label>
+       </td>
+     </tr>
+     <tr>
+      <td>&nbsp;
+        <input name="Tatiana" id="Tatiana" type="checkbox"/>
+        <label class="form_col" for="Tatiana">&nbsp;Tatiana (Assistante Direction)</label>
+      </td>
+      <td>&nbsp;
+        <input name="Elodie" id="Elodie" type="checkbox" />
+        <label class="form_col" for="Cyril">&nbsp;Elodie (Responsable achat)</label>
+      </td>
+    </tr>
+    <tr>
+      
+    </tr>
+    <tr>
+      
+    </tr>
+    
+  </tr>
+</table>
+</br></br>
+<fieldset>
+  <legend class="titre">Raison du rendez-vous</legend>
+  <ul>
+    <li>
+      <label class="rendez-vous" for="rendez-vous">
+        <input type="radio" id="spontane" name="rendez-vous" />
+        Candidature spontanée
+      </label>
+    </li>
+    <li>
+     <label class="rendez-vous" for="rendez-vous">
+      <input type="radio" id="Commercial" name="rendez-vous"/>
+      Prise de contact avec un Commercial
+    </label>
+  </li>
+</ul>
+</fieldset> 
+<tr>
+  <table>
+    <tr>
+      <td>
+        <h1>
+          <button class="reset" type="reset">Réinitialiser</button>
+        </h1>
+        
+      </td>
+    </tr>
+  </table>
+</form>
+<h2>
+ 
+  
+  <button class="envoyer" type="button" onclick="envoye();"> Envoyer</button>
+  <button class="accueil" type="button" onclick="home();"> Accueil</button>
+</h2>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Dancing</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+	<script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+	<script src="lib/qi.js"></script>
+	<script>
+		//var rv, srv, cafe, div, para;
+		var session, web, retour;
+        var hostIPV4 = "164.254.171.140";
+        var hostIPV6 = "192.168.1.181";
+
+		function connected() {
+			console.log("connected");
+            console.log(robotIp());
+		}
+
+		function disconnected() {
+			console.log("disconnected");
+		}
+
+		QiSession(function(session) {
+			connected();
+		}, disconnected, hostIPV6);
+
+function eventDanceGuitar() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceGuitar", 1
+        );
+    });
+}
+
+function eventDanceSaxo() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceSaxo", 1
+        );
+    });
+}
+
+function eventDanceJazz() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceJazz", 1
+        );
+    });
+}
+
+function eventDanceThriller() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceThriller", 1
+        );
+    });
+}
+
+function eventDanceRobot() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceRobot", 1
+        );
+    });
+}
+
+function eventDanceRock() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceRock", 1
+        );
+    });
+}
+
+function eventDanceTaichi() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceTaichi", 1
+        );
+    });
+}
+
+function eventDanceChill() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceChill", 1
+        );
+    });
+}
+
+function eventDanceDab() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceDab", 1
+        );
+    });
+}
+
+function eventDanceMouse() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceMouse", 1
+        );
+    });
+}
+
+function eventDanceGorille() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceGorille", 1
+        );
+    });
+}
+
+function eventDanceElephant() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("danceElephant", 1
+        );
+    });
+}
+
+
+    retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+}
+
+	</script>
+	<link rel="stylesheet" type="text/css" href="style/styleDancing.css">
+</head> 
+<body>
+
+	<input type="button" id="Home" alt="buttonMenu" name="Home" value= "Menu" onclick="retour();">
+	</br></br>
+
+	<center><img src="img/logo.jpg" class="cmultiserv" style="width:40%;height:40%;"></center>
+
+
+  <figure>
+
+      <table>
+<center>
+<div>
+            <input type="button" onclick="eventDanceGuitar();" class="boutons" value="Guitare">
+
+            <input type="button"  onclick="eventDanceJazz();" class="boutons" value="Disco">
+
+            <input type="button"  onclick="eventDanceThriller();" class="boutons" value="Thriller">
+            </br></br>
+</div> 
+<div>
+ 
+            <input type="button"  onclick="eventDanceRock();" class="boutons" value="Rock">
+
+            <input type="button"  onclick="eventDanceTaichi();" class="boutons" value="Taichi">
+
+            <input type="button"  onclick="eventDanceChill();" class="boutons" value="Chill">
+            </br></br>
+</div> 
+
+</center>
+<div>
+            <input type="button"  onclick="eventDanceDab();" class="boutons" value="Dab">
+
+            <input type="button"  onclick="eventDanceMouse();" class="boutons" value="La souris">
+
+            <input type="button"  onclick="eventDanceGorille();" class="boutons" value="Le Gorille">
+
+            <input type="button"  onclick="eventDanceElephant();" class="boutons" value="L'éléphant">
+</div>     
+      </table>
+      </form> 
+  	</figure>
+</body>
+
+
+
+
+
+
