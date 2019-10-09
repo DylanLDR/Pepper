@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Index</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+	<script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+	<script src="lib/qi.js"></script>
+	<script>
+		//var rv, srv, cafe, div, para;
+		var sessi, web, say;
+		var hostIPV4 = "164.254.171.140";
+		var hostIPV6 = "192.168.1.181";
+
+		function connected() {
+			console.log("connected");
+		}
+
+		function disconnected() {
+			console.log("disconnected");
+		}
+
+		QiSession(function(s) {
+			connected();
+			session = s;
+			eventFormulaireCMultiserv();
+			eventFormulaireRV();
+			eventFormulaireSRV();
+			eventCafe();
+			eventDivertissement();
+			eventParametre();
+			sampleButtonClicked();
+			cafe();
+		}, disconnected, hostIPV6);
+
+		function eventFormulaireCMultiserv() {
+			session.service("ALMemory").then(function (ALMemory) {
+				ALMemory.subscriber("toTablette/activerFormulaireCMultiserv").then(function (subscriber) {
+					subscriber.signal.connect(function (state) {
+						console.log('[EVENT]toTablette/activerFormulaireCMultiserv:');
+						document.location.href= "Formulaires/formulaireRSE.html";
+					});
+				});
+			});
+		}
+
+		function eventFormulaireRV() {
+			session.service("ALMemory").then(function (ALMemory) {
+				ALMemory.subscriber("toTablette/activerFormulaireRV").then(function (subscriber) {
+					subscriber.signal.connect(function (state) {
+						console.log('[EVENT]toTablette/activerFormulaireRV:');
+						document.location.href= "Formulaires/formulaireCMultiserv.html";
+					});
+				});
+			});
+		}
+
+		function eventFormulaireSRV() {
+			session.service("ALMemory").then(function (ALMemory) {
+				ALMemory.subscriber("toTablette/activerFormulaireSRV").then(function (subscriber) {
+					subscriber.signal.connect(function (state) {
+						console.log('[EVENT]toTablette/activerFormulaireSRV:');
+						document.location.href="Formulaires/formulaireSRV.html";
+					});
+				});
+			});
+		}
+
+		function eventCafe() {
+			session.service("ALMemory").then(function (ALMemory) {
+				ALMemory.subscriber("toTablette/activerCafe").then(function (subscriber) {
+					subscriber.signal.connect(function (state) {
+						console.log('[EVENT]toTablette/activerCafe:');
+						document.location.href="Cafe/cafe.html";
+					});
+				});   
+			});
+		}
+
+		function eventDivertissement() {
+			session.service("ALMemory").then(function (ALMemory) {
+				ALMemory.subscriber("toTablette/activerDivertissement").then(function (subscriber) {
+					subscriber.signal.connect(function (state) {
+						console.log('[EVENT]toTablette/activerDivertissement:');
+						document.location.href="Divertissement/divertissement.html";
+					});
+				});
+
+			});
+		}
+
+		function eventParametre() {
+			session.service("ALMemory").then(function (ALMemory) {
+				ALMemory.subscriber("toTablette/activerParametre").then(function (subscriber) {
+					subscriber.signal.connect(function (state) {
+						console.log('[EVENT]toTablette/activerParametre:');
+						document.location.href="Parametres/parametre.html";
+					});
+				});
+			});
+		}
+
+
+nocibe = function nocibe() {
+document.location.href="Magasin/Promo.html";
+
+}
+
+function RSE() {
+document.location.href="Formulaires/formulaireRSE.html";
+
+}
+
+
+web = function WebBrowser() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("WebBrowser", 1);
+       // ALMemory.raiseEvent("say", 1);
+    });
+}
+
+dialogue = function dialogue() {
+	document.location.href="Questions/Questions.html";
+	this.service("ALTextToSpeech").then(function (ALTextToSpeech){
+    	ALTextToSpeech.say("Pose moi une question");
+    });
+    this.service("ALMemory").then(function (ALMemory) {
+    	ALMemory.raiseEvent("Dialogue", 1);     
+    });
+}
+
+
+		function cafe(){
+			this.service("ALMemory").then(function (ALMemory) {
+			    ALMemory.raiseEvent("say", 1);
+			});
+		document.location.href="Cafe/cafe.html";
+
+		}
+
+
+	</script>
+	<link rel="stylesheet" type="text/css" href="style/styleIndex.css">
+
+</head> 
+<body onload= "">
+
+	<img src="img/logo2.jpg" class="cmultiserv">
+</br></br>
+  <figure>
+
+      <table>
+        <tr>
+          <td>
+          <form action="Formulaires/formulaireRSE.html">
+            <center><input type="image" class="boutons" src="img/Formulaire_Button.png" alt="Formulaire"/>
+            <h1>Formulaire</h1></center>
+            </form>
+          </td>
+          <td>
+          <form action="Divertissement/divertissement.html">
+            <center><input type="image" class="boutons" src="img/Divertissement_Button.png" alt="Divertissement"/>
+            <h1>Jeux</h1></center>            
+            </form>
+          </td>
+          <td>
+           <form action="PlayVideos/Videos.html">
+            <center><input type="image" class="boutons" src="img/Video_Button.png" alt="Videos"/>
+            <h1>Vidéos</h1></center>
+           </form>
+          </td>
+          <td>
+
+          <center><input type="image" class="boutons" src="img/Web_Button.png" alt="Web" onclick="dialogue();"/>
+            <h1>Questions</h1></center>
+          </td>
+          <td>
+          <form action="Dancing/Dancing.html">
+            <center><input type="image" class="boutons" src="img/Dancing_Button.png" alt="Dancing" />
+            <h1>Danses</h1></center>
+            </form>
+          </td>
+
+          <td>
+            <center><input type="image" class="boutons" src="img/Nocibe.png" alt="nocibe" onclick="nocibe();" />
+            <h1>Nocibé</h1></center>
+          </td>
+
+          <td>
+            <center><input type="image" class="boutons" src="img/Cafe_Button.png" alt="Café" onclick="cafe();"/>
+            <h1>Café</h1></center>
+  		</td>
+  	</tr>
+      </table>
+
+      </form> 
+  	</figure>
+</body>
