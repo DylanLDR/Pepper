@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta charset="utf-8" />
+    <title>login Paramètre</title>
+    <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
+    <script>
+    // When the user clicks on div, open the popup
+function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
+      function sampleButtonClickedValider() {
+          var passwordUser = "Cmultiserv66";
+     
+        if((document.getElementById("password").value == passwordUser)){
+              document.location.href="parametre.html" 
+        }else{
+          console.log("acces refuser");
+          myFunction() ;
+        }
+      }
+    </script>
+    <link rel="stylesheet" type="text/css" href="style/styleLogin.css" media="all"/>
+  </head>
+  <body>
+
+ <form action="">
+<input class="password" type="password" id="password" name="password">
+
+
+<table>
+      <tr>
+        <td>
+          <td>
+            <button class="Valider" type="button" onclick="sampleButtonClickedValider();">Valider</button>
+          </td> 
+        </td>
+      </tr>
+    </table>
+
+</form>
+<div class="popup">
+  <span class="popuptext" id="myPopup">Acces refuser</span>
+</div>
+
+  </body>
+</html>

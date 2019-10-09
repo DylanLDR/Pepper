@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Dancing</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+	<script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+	<script src="lib/qi.js"></script>
+	<script>
+		//var rv, srv, cafe, div, para;
+		var session, web, retour;
+        var hostIPV4 = "164.254.171.140";
+        var hostIPV6 = "192.168.1.181";
+
+		function connected() {
+			console.log("connected");
+		}
+
+		function disconnected() {
+			console.log("disconnected");
+		}
+
+		QiSession(function(session) {
+			connected();
+		}, disconnected, hostIPV6);
+
+
+    retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+}
+
+	</script>
+	<link rel="stylesheet" type="text/css" href="style/styleQuestions.css">
+</head> 
+<body>
+
+	<input type="button" id="Home" alt="buttonMenu" name="Home" value= "Menu" onclick="retour();">
+	</br></br>
+
+	<center><img src="img/logo.jpg" class="cmultiserv" style="width:40%;height:40%;"></center>
+            <center>
+            <h1>Qu'est ce que tu sais faire ?</h1>
+            <h1>Parle moi de CMultiserv</h1>
+            <h1>Quels services propose CMultiserv ?</h1>
+            <h1>Quels sont vos principaux clients ?</h1>
+            <h1>Quelles sont vos certifications ?</h1>
+            <h1>Quels sont les futurs projets de votre entreprise ?</h1>
+        </center>
+</body>

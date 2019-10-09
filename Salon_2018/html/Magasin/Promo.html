@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+/<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>sucre</title>
+  <script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+  <script>
+/**
+ * @file cafe-sucre Pepper mail
+ * @author Franck Mérou <franck.merou@cmultiserv.com>
+ *
+    /**
+    * variable session type QiSession
+    *
+    */
+    var Foui, Fnon, retour;
+    var host = "192.168.1.181";
+
+    function connected() {
+      console.log("connected");
+    }
+
+    function disconnected() {
+      console.log("disconnected");
+    }
+
+    QiSession(function(session) {
+      connected();
+      run();
+
+    }, disconnected, host);
+
+
+    retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+}
+
+function promo() {
+  document.location.href="Produit.html"
+
+
+}
+function run() {
+
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("nocibe", 2
+          );
+       // ALMemory.raiseEvent("say", 1);
+    });
+}
+
+    
+  </script>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/styleCafe.css" media="all"/>
+  </head>
+  <body>
+  	<figure>
+ 
+    <center><img src="img/nocibe.png" style="width:50%;height:30%;"></center>
+
+    <br></br>
+    <br></br>
+
+            <center><input type="image" src="img/promo.jpg" alt="nocibe" onclick="promo();"/></center>
+    
+
+    </figure>    
+  </body>
+</html>

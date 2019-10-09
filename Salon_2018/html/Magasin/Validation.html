@@ -1,0 +1,65 @@
+/<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>sucre</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+  <script>
+/**
+ * @file cafe-sucre Pepper mail
+ * @author Franck Mérou <franck.merou@cmultiserv.com>
+ *
+ 		/**
+ 		* variable session type QiSession
+ 		*
+ 		*/
+    var Foui, Fnon, retour;
+    var host = "192.168.1.181";
+    function connected() {
+      console.log("connected");
+    }
+
+    function disconnected() {
+      console.log("disconnected");
+    }
+
+    QiSession(function(session) {
+      connected();
+      Validation();
+
+}, disconnected, host);
+
+function Validation() {
+
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("produit", 6
+        );
+    });
+}
+
+  </script>
+  <link rel="stylesheet" type="text/css" href="style/styleNocibe.css">
+
+
+</head>
+<body>
+  <center><img src="img/nocibe.png"></center>
+  <form>
+      </br></br>
+    <center><label>Commande Validé</label>
+<figure>
+      <table>
+
+<tr>
+  <td>
+     <!--input id="oui" type="image" src="oui.png" alt="OUI"/-->		
+          <center><input type="image" style="width:50%;" src="img/Valider.png" alt="produit"></br></br>
+  </td>
+</tr>
+
+    <p>Votre commande sera disponible dans votre magasin en moins de 24H</p>
+</table>
+</figure>
+  </html>

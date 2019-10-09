@@ -1,0 +1,107 @@
+/<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>sucre</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+  <script>
+/**
+ * @file cafe-sucre Pepper mail
+ * @author Franck Mérou <franck.merou@cmultiserv.com>
+ *
+ 		/**
+ 		* variable session type QiSession
+ 		*
+ 		*/
+    var Foui, Fnon, retour;
+    var host = "192.168.1.181";
+    function connected() {
+      console.log("connected");
+    }
+
+    function disconnected() {
+      console.log("disconnected");
+    }
+
+    QiSession(function(session) {
+      connected();
+      run();
+
+    }, disconnected, host);
+
+             retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+} 
+
+Fiche_Produit_1 = function Fiche_Produit_1() {
+    document.location.href="Fiche_Produit_1.html"
+}
+
+Fiche_Produit_2 = function Fiche_Produit_2() {
+      document.location.href="Fiche_Produit_2.html"
+}
+
+Fiche_Produit_3 = function Fiche_Produit_3() {
+      document.location.href="Fiche_Produit_3.html"
+}
+
+Fiche_Produit_4 = function Fiche_Produit_4() {
+      document.location.href="Fiche_Produit_4.html"
+}
+
+function run() {
+
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("promotion", 2
+          );
+       // ALMemory.raiseEvent("say", 1);
+    });
+}
+
+
+  </script>
+  <link rel="stylesheet" type="text/css" href="style/styleNocibe.css">
+   <input class="boutons" type="button" id="Home" alt="buttonMenu" name="Home"  value=Menu onclick="retour();">
+  </html>
+
+</head>
+<body>
+  <center><img src="img/nocibe.png">
+  <form>
+    <label>Choisissez un produit</label></br></br></br></br>
+<figure>
+      <table>
+
+<tr>
+  <td>
+     <!--input id="oui" type="image" src="oui.png" alt="OUI"/-->		
+            <td><center><img class="produit1" src="img/Produit_1.jpg"></center></td>
+
+           <td> <center><img class="produit2" src="img/Produit_2.jpg"></center></td>
+           <td><center><img class="produit3" src="img/Produit_3.jpg"></center></td>
+          <td><center><img class="produit4" src="img/Produit_4.jpg"></center></td>
+  </td>
+</tr>
+<tr>
+  <td>
+            
+            <td><center><input type="button" onclick="Fiche_Produit_1();" class="boutons" value="Mascara"></center></td>
+
+            <td><center><input type="button"  onclick="Fiche_Produit_2();" class="boutons" value="Gel-Crème"></center></td>
+
+            
+
+            
+
+          <td>
+            <center><input type="button"  onclick="Fiche_Produit_3();" class="boutons" value="Parfum"></center></td>
+  
+            <td><center><input type="button"  onclick="Fiche_Produit_4();" class="boutons" value="Rouge à lèvres"></center></td>
+  </td>
+</tr>
+</center>
+</table>
+</figure>
+

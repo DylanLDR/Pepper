@@ -1,0 +1,82 @@
+/<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>sucre</title>
+	<script src="/libs/qimessaging/2/qimessaging.js"></script>
+  <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+  <script>
+/**
+ * @file cafe-sucre Pepper mail
+ * @author Franck Mérou <franck.merou@cmultiserv.com>
+ *
+ 		/**
+ 		* variable session type QiSession
+ 		*
+ 		*/
+    var Foui, Fnon, retour;
+    var host = "192.168.1.181";
+    function connected() {
+      console.log("connected");
+    }
+
+    function disconnected() {
+      console.log("disconnected");
+    }
+
+    QiSession(function(session) {
+      connected();
+      Panier();
+
+}, disconnected, host);
+
+function Panier() {
+
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("produit", 5
+        );
+    });
+}
+
+ok = function Panier_1() {
+    document.location.href="Validation.html"
+}
+
+  </script>
+  <link rel="stylesheet" type="text/css" href="style/styleNocibe.css">
+
+
+</head>
+<body>
+ <a class="boutons-retour" href="Produit.html">Retour</a>
+  <center><img src="img/nocibe.png"></center>
+  <form>
+      </br></br>
+    <center><label>Votre panier Nocibé</label>
+<figure>
+      <table>
+
+<tr>
+  <td>
+     <!--input id="oui" type="image" src="oui.png" alt="OUI"/-->		
+           <input type="image" src="img/Produit_1.jpg" alt="produit">
+
+
+<td><center>
+  <p>Produit: Mascara Volume Effet faux Cils [Yves Saint Laurent]</p>
+  <p>Quantité: 1</p>
+
+
+  </br></br>
+  </br></br>
+
+  <p class="prix">Total: 24,43€</p>
+  </br></br>
+  <input type="button" class="boutons" value="Finaliser ma commande" onclick="ok();">
+
+  </td>
+</tr>
+</table>
+</figure>
+  </html>

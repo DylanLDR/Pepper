@@ -1,0 +1,111 @@
+body{
+  background-image: url("img/config.png");
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+form { 
+
+position:relative;
+      transition: .5s ease;
+      top: 240x;
+      left: 550px;
+      right: -550px;
+      bottom: -240px;
+}
+
+            button{
+     /* -moz-box-shadow: 3px 4px 0px 0px #899599;
+      -webkit-box-shadow: 3px 4px 0px 0px #899599;
+      box-shadow: 3px 4px 0px 0px #899599;
+      background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bab1ba));
+      background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+      background:-webkit-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+      background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+      background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+      background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
+      background-color:#ededed;
+      -moz-border-radius:15px;
+      -webkit-border-radius:15px;
+      border-radius:15px;
+      border:1px solid #d6bcd6;
+      display:inline-block;
+      color:#003333;*/
+
+      width:100px;
+      height:100px;
+      background:#fafafa;
+      box-shadow:2px 2px 8px #aaa;
+      font:bold 13px Arial;
+      border-radius:50%;
+      color:#555;
+    }
+
+   h1{
+     margin-left: 125%;
+
+
+
+   }
+
+   h2{
+     margin-left: 49%;
+   }
+
+   /* Popup container - can be anything you want */
+   .popup {
+    position:relative;
+    left: 10%
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* The actual popup */
+  .popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+
+  /* Popup arrow */
+  .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+
+  /* Toggle this class - hide and show the popup */
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+  /* Add animation (fade in the popup) */
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }

@@ -1,0 +1,91 @@
+  <!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <title>Paramètre</title>
+ <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
+ <script src="https://code.jquery.com/jquery-3.0.0.js" ></script>
+ <script>
+   var session = new QiSession();
+   function sampleButtonClickedLearnHome(){
+    session.service("ALMemory").done(function (ALMemory) {
+      ALMemory.raiseEvent("fromTablette/parametre/deplacement/learnHome",1);
+    });
+  }
+
+  /*function sampleButtonClickedAddFace(){
+
+   session.service("ALMemory").done(function (ALMemory) {
+    ALMemory.raiseEvent("fromTablette/parametre/face/learnFace",1);
+  });
+
+ }
+
+ function sampleButtonClickedRemoveFace(){
+
+   session.service("ALMemory").done(function (ALMemory) {
+    ALMemory.raiseEvent("fromTablette/parametre/face/unlearnFace",1);
+  });
+
+ }
+
+ function sampleButtonClickedChangePassword(){
+
+   var xmlDoc, Password;
+    xmlDoc= document.implementation.createDocument("", "", null);
+    xmlDoc.async=false;
+    xmlDoc.load("config.xml");
+    Password = xmlDoc.getElementsByTagName('Password');
+
+}
+function sampleButtonClickedPepperParametre(){
+	document.location.href="http://192.168.1.181/#/menu/myrobot"
+}*/
+function sampleButtonClickedRetourAcceuil(){
+	document.location.href="../index.html"
+}
+</script>
+<link rel="stylesheet" type="text/css" href="style/styleParametre.css" media="all"/>
+</head>
+<body>
+  <table>
+    <tr>
+      <td>
+       <!-- <label>Apprendre son point de départ</label>-->
+        <button class="LearnHome" type="button" onclick="sampleButtonClickedLearnHome();"> Learn Home</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <!--<label>Ajouter un visage</label>-->
+       <!--  <button class="AddFace" type="button" onclick="sampleButtonClickedAddFace();">Add Face</button>-->
+      </td>
+    </tr>
+    <tr>
+      <td>
+       <!-- <label>supprimer un visage</label>-->
+        <!-- <button class="RemoveFace" type="button" onclick="sampleButtonClickedRemoveFace();">Remove Face</button>-->
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <!--<label>Changer de mot de passe</label>-->
+        <!-- <button class="ChangePassword" type="button" onclick="sampleButtonClickedChangePassword();">Change Password</button>-->
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <!--<label>Changer de mot de passe</label>-->
+         <!--<button class="PepperParametre" type="button" ><a href="http://192.168.1.181/#/menu/myrobot">Pepper parametre</a></button>-->
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <!--<label>Changer de mot de passe</label>-->
+        <button class="RetourAcceuil" type="button" onclick="sampleButtonClickedRetourAcceuil();">Retour Acceuil</button>
+      </td>
+    </tr>
+  </table>       
+</h2>
+</body>
+</html>

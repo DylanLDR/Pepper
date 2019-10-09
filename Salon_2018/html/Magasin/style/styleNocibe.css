@@ -1,0 +1,99 @@
+body{
+        background-color: white;
+        
+
+     }
+/*figure{
+	background-color: grey;
+          
+ }*/
+
+label{ 
+	font-size: 4em;
+	text-align: center;
+	font-family: arial; 
+
+}
+
+h2{
+
+	font-size: 2em;
+	font-family: arial;
+}
+
+.boutons{
+	padding: 20px 25px;
+	font-size:30px;
+	text-transform:uppercase;
+	font-weight:900;
+
+}
+
+
+.boutons-retour{
+	padding: 20px 25px;
+	font-size:20px;
+	text-transform:uppercase;
+	font-weight:900;
+	font-family: arial;
+	text-decoration: none;
+	color: black;
+	background: linear-gradient(white, lightgray);
+	border: solid 1px rgb(100,100,100);
+}
+
+.boutons-retour:hover{
+	padding: 20px 25px;
+	font-size:20px;
+	text-transform:uppercase;
+	font-weight:900;
+	text-decoration: none;
+	color: black;
+	background: linear-gradient(lightgray, white);
+	border: solid 1px rgb(100,100,100);
+}
+
+.separateur_produits {
+	width: 50px;
+}
+
+
+.produit1 {
+width: 80%;
+}
+
+.produit2 {
+width: 75%;
+}
+
+.produit3 {
+width: 80%;
+}
+
+.produit4 {
+width:75%;
+}
+
+.padding-bottom-produit {
+	padding-bottom: 50px;
+}
+
+.resume {
+	text-align: center;
+	width:65%;
+	font-size: 24px;
+	font-family: arial;
+}
+
+.prix {
+	text-transform: uppercase;
+	color: red;
+	font-weight: 900;
+	font-family: arial;
+	font-size: 50px;
+}
+
+p {
+	font-family: arial;
+	font-size: 24px !important;
+}

@@ -1,0 +1,18 @@
+
+.cmultiserv{
+	/*margin-top: 20em;*/
+	 height: 100%; 
+	 width: 100%;
+	 /* Center and scale the image nicely */
+    /*background-position: center;*/
+    background-repeat: no-repeat;
+    background-size: cover;
+	/*margin: auto;*/
+	display: block;
+}
+
+.boutons {
+	padding: 20px 20px; /* 50 : 37*/
+	height: 95%; 
+	width: 95%;
+}

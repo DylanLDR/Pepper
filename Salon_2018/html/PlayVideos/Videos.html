@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Vidéos de présentation CMultiserv</title>
+    <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
+      <script src="https://www.promisejs.org/polyfills/promise-6.0.0.min.js"></script>
+  <script src="../lib/qi.js"></script>
+ <script>
+
+/*
+* 
+***/
+  var session, retour;
+  var host = "192.168.1.181";
+    function connected() {
+        console.log("connected");
+    }
+
+    function disconnected() {
+        console.log("disconnected");
+    }
+   QiSession(function(s) {
+      connected();
+      session = s;
+      /*sampleButtonClickedDance();
+      sampleButtonClickedEgnime();
+      sampleButtonClickedChant();
+      sampleButtonClickedHome();*/
+    }, disconnected, host);
+
+      retour = function sampleButtonClicked() {
+  document.location.href="../index.html"
+}
+
+ function PlayVideo() {
+    this.service("ALMemory").then(function (ALMemory) {
+      ALMemory.raiseEvent("toTablette/videos/France_3",document.getElementById("videos").value);
+    });
+  }
+
+  function france3() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("fromTablette/video/france3", 1
+        );
+    });
+}
+  function inauguration() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("fromTablette/video/inauguration", 1
+        );
+    });
+}  function start_et_metier() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("fromTablette/video/star-et-metier", 1
+        );
+    });
+}  function Trophé_RSE() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("fromTablette/video/trophee-rse", 1
+        );
+    });
+}  function TVCAT() {
+    this.service("ALMemory").then(function (ALMemory) {
+        ALMemory.raiseEvent("fromTablette/video/jt-catalan", 1
+        );
+    });
+}
+
+
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="style/styleVideos.css" media="all"/>
+  </head>
+  <body>
+    <figure>
+      <form action= retour();>
+   <input type="button" id="Home" alt="buttonMenu" name="Home"  value=Menu onclick="retour();">
+        <center><input type="image" src="img/logo.jpg" style="width:30%;height:30%;"></center>
+      </form>
+
+
+            <h1><input type="image" src="img/France-3.jpg" alt="france3" onclick="france3();"></h1>     
+            <center><h2>CMultiserv présenté par France 3</h2>
+      </br></br>
+
+
+            <h1>  <input type="image" src="img/inauguration.jpg" alt="inauguration" onclick="inauguration();"></h1>
+            <center><h2>Inauguration de CMultiserv</h2>    </h1>
+      </br></br>
+
+
+            <h1>   <input type="image" src="img/star-et-metiers.jpg" alt="start et métiers" onclick="start_et_metier();"></h1>
+            <center><h2>CMultiserv trophée star et métiers</h2>
+      </br></br> 
+
+
+            <h1>   <input type="image" src="img/trophee-rse.jpg" alt="trophee rse" onclick="Trophé_RSE();"></h1>
+            <center><h2>CMultiserv Trophée RSE</h2>
+      </br></br>
+
+
+            <h1>   <input type="image" src="img/jt-catalan.jpg" alt="tvcat" onclick="TVCAT();"></h1>
+            <center><h2>CMultiserv présenté par TV CAT</h2></center>
+      </br></br> 
+      
+    </figure>
+
+  </body>
+</html>

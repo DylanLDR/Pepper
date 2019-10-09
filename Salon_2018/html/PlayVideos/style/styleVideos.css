@@ -1,0 +1,22 @@
+body{
+        background-color: white;
+        
+
+     }
+/*figure{
+	background-color: grey;
+          
+ }*/
+
+h1{ 
+	font-size: 4em;
+	text-align: center;
+	font-family: arial; 
+
+}
+
+h2{
+
+	font-size: 2em;
+	font-family: arial;
+}
