@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package uuid="salon_2018-af8e72" version="0.1.2">
+ <names>
+  <name lang="en_US">Untitled</name>
+  <name lang="fr_FR">Salon_2018</name>
+ </names>
+ <descriptions>
+  <description lang="fr_FR">Formulaire, Divertissement, video, web, Animation, Nocibé, Café, question</description>
+ </descriptions>
+ <supportedLanguages>
+  <language>fr_FR</language>
+ </supportedLanguages>
+ <descriptionLanguages>
+  <language>fr_FR</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="behavior_1">
+   <userRequestable/>
+   <nature>interactive</nature>
+   <names>
+    <name lang="fr_FR">salon</name>
+   </names>
+   <triggerSentences>
+    <sentence lang="fr_FR">lance l'application salon</sentence>
+   </triggerSentences>
+   <loadingResponses>
+    <sentence lang="fr_FR">chargement de l'application en cours</sentence>
+   </loadingResponses>
+   <permissions>
+    <canRunOnPod/>
+    <canStandUp/>
+    <canSitDown/>
+   </permissions>
+  </behaviorContent>
+  <dialogContent topicName="salon" typeVersion="1.0">
+   <topic path="Dialoguesalon/salon_frf.top" language="fr_FR"/>
+  </dialogContent>
+ </contents>
+</package>
