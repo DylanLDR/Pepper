@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.0" uuid="test-6373cc">
+ <names>
+  <name lang="en_US">GestionAcceuil</name>
+ </names>
+ <supportedLanguages>
+  <language>fr_FR</language>
+ </supportedLanguages>
+ <descriptionLanguages>
+  <language>en_US</language>
+  <language>fr_FR</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="behavior_1">
+   <userRequestable/>
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <dialogContent topicName="ExampleDialog" typeVersion="1.0">
+   <topic path="behavior_1/ExampleDialog/ExampleDialog_enu.top" language="en_US"/>
+   <topic path="behavior_1/ExampleDialog/ExampleDialog_frf.top" language="fr_FR"/>
+  </dialogContent>
+  <dialogContent topicName="" typeVersion="1.0"/>
+  <dialogContent topicName="AcceuilCMultiServ" typeVersion="1.0">
+   <topic path="AcceuilCMultiServ/AcceuilCMultiServ_frf.top" language="fr_FR"/>
+  </dialogContent>
+ </contents>
+</package>

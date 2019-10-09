@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.2" uuid="pepper_dance">
+ <names>
+  <name lang="en_US">myDances</name>
+  <name lang="fr_FR">Pepper_dance</name>
+ </names>
+ <descriptionLanguages>
+  <language>fr_FR</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="dance_rock">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="dance_taichi">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="dance_guitar">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="dance_chill">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="dance_dab">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="dance_disco">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <behaviorContent path="dance_thriller">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+ </contents>
+</package>

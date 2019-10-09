@@ -1,0 +1,803 @@
+topic: ~salon()
+language: frf
+
+#Bienvenue dans la page de dialogue pour Salon QiChat du Robot Pepper 
+#N'ayez pas peur je vais vous guidez
+#Première chose, le caractère "#" sert a commenter. 
+#Tout ce qui se trouver sur la droite de ce caractère n'est pas executé, n'ayez donc pas peur de mettre vos propre commentaire
+
+#Vous remarquerez aussi que certains mots ne sont pas encadré de guillemets.
+#En fait ceci : "Hello Cyril"  --> est une phrase
+#Alors que ceci : Hello --> est un mot
+#donc : Hello Cyril --> sont deux mots distincts
+
+#Ce qui suit sont des concepts,  ce sont des conteneurs de mots et de phrases.
+#Il sont surtout utilisé pour simplifié les répétitions.
+#Ne vous inquiétez pas trop de çà.
+
+concept: (entreprise) ["entreprise" "société" "boîte" "l'entreprise" "la société"]
+concept: (concurent) ["finélec" "émalec" "espace quattre" "presta service" "eugéo maintenance"]
+
+concept: (confirmation)[ok oui "pourquoi pa0s" "je veut bien" "d'accord" ouais super]
+concept: (negation)[non "je veut pas" "pas d'accord" "pas la peine"]
+concept: (plus_de_question) [{"je n'ai"} "plus de questions" ~negation]
+
+concept: (interogationInverse)["Cé quoi" "Tu connais"]
+concept: (interogation)["Qu'est ce que" "C'est quoi" "Connais tu" "Quel est" ~interogationInverse]
+concept: (interogationAvoir) ["Qu'a tu" "Qu'avez vous" "Quels sont" "Vous avez quoi" "Quel est"]
+concept: (interogationPouvoir) ["Que peux tu" "Que pouvez vous" ]
+concept: (vouloir) ["Je veux" "Je souhaite"]
+
+concept: (interoConcu)["Que pensez vous de" "Vous avez quoi de plus que"]
+concept: (Connaitre)["Vous connaissez" "Connaissez-vous" "Tu connais" "connais-tu" "Est-ce que tu connais"]
+
+########################################################################################################################################
+########################################################################################################################################
+
+#Voici la partis où vous passerez le plus de temps.
+#Bienvenu dans les règles ou aussi nommé la liste de questions
+#
+#Pour que Pepper puisse comprendre une question, il faut la lui renseigné.
+#Pour ce faire on indique une question avec "u:(La question)" que l'on appelle une règle
+#Et on indique en dessous la réponse du robot
+#Voici un exemple :
+#    u:(La question)
+#    La reponse
+#
+#La question ou les questions que l'on renseigne dans la règle sont très maléables
+#par exemple : 
+#    u:("Hello Cyril") --> Le robot attend juste la phrase "Hello Cyril" 
+#    u:("~interogation Cyril") --> Le robot attend une phrase du concept interrogation suivit du mot Cyril
+#
+#Vous avez desuite remarqué le nouveau caractère "~", celui ci sert a appeler un concept, il est uniquement utilisé dans ce cas
+#QiChat dispose de plusieurs caractère outils, qui vous seront très utiles, je vais vous en apprendre quelque uns des plus utiles.
+#
+#Quand on renseigne une question, il est possible qu'il y ai plusieurs formulations possible
+#Par exemple, comment renseigner "Qui est Cyril ?" et "C'est qui Cyril ?" ?
+#On va utiliser "[]", les crochets permettent de renseigner une liste de phrases ou de mots que le robot peut comprendre.
+#
+#Donc en utilisant les corchets on obtiendra ceci :
+#    u:(["Qui est Cyril" "C'est qui Cyril"]) --> le robot répondra correctement si il entend "Qui est Cyril ?" ou "C'est qui Cyril ?"
+#Autre version :
+#    u:(["C'est qui" "Qui est"] Cyril) --> le robot répondra correctement si il entend "Qui est Cyril ?" ou "C'est qui Cyril ?"
+#Dans le cas d'une phrase avec une partie qui ne change pas plus grande, on mettra plutot ceci :
+#    u:("["C'est qui" "Qui est"] Cyril Marcé") 
+#
+#Remarquez que la première guillemet est avant le crochet, ce n'est pas obligatoire mais c'est une bonne pratique
+#Mais on est pas limité à une seule liste, on peut très bien mettre ceci
+#    u:("["C'est qui" "Qui est"] ["Cyril Marcé" "Tatiana Loffredo"]") --> là on répond à "Qui est Cyril Marcé ?", "Qui est Tatiana Loffredo ?", "C'est qui Cyril Marcé ?" ou "C'est qui Tatiana Loffredo ?"
+#
+#
+#Nous venons de voir les listes de phrases et mots.
+#Mais que faire si je veux que le robot réponde à "Qui est Cyril" ou tout simplement à "Cyril" ?
+#La liste veut obligatoirement qu' un choix soit renseigné, elle n'est pas adapté a notre cas.
+#Nous allons donc utiliser les caractères "{}" qui permetent de renseigner un mot ou une phrase optionelle
+#Par exemple dans notre cas :
+#    u:({"Qui est"} Cyril) --> le robot répondra à "Qui est Cyril ?" mais aussi a "Cyril"
+#    u:("{"Qui est"} Cyril Marcé") --> le robot répondra à "Qui est Cyril Marcé ?" mais aussi a "Cyril Marcé"
+#
+#Vous avez maintenant en main vos principaux outils. Il y en a d'autres mais pour le moment, ceux ci suffiront amplement.
+#Car en effet je ne l'ai pas précisé, mais il est tout à fais possible de combiner ces outils !
+#Ne fuyez pas !
+#C'est pas si compliqué que çà.
+#
+#Nous allons décortiqué celà avec un exemple. Prenez la règle suivante : 
+#    u:("{["Qui est" ~Connaitre]} ["Cyril" "Cyril Marcé"]")
+#    Nous avons un concept, deux liste, dont une qui est optionnelle
+#    Le robot peut donc réponde à :
+#        "Cyril"
+#        "Cyril Marcé"
+#        "Qui est Cyril ?"
+#        "Qui est Cyril Marcé ?"
+#        "Connais tu Cyril ?"
+#        "Connais tu Cyril Marcé ?" 
+#        "Tu connais Cyril ?"
+#        "Tu connais Cyril Marcé ?" 
+#    Je me suis limité aux phrases du concept "Connaitre" qui sont logique dans notre cas
+#
+#Le mieux quand on travaille en QiChat est de partir d'une question a laquelle on souhaite répondre
+#    u:("Quels sont vos services")
+#
+#On va commencer par identifier le mot clé de la question : "Services"
+#On va l'isoler pour permettre au gens de juste dire "Services", bien sûr il ne faut pas que l'on ai une autre règle ou l'on permet aussi de dire que "services"
+#    u:("{"Quels sont vos"} services")
+#
+#Ensuite on va permettre aux gens de formuler différement avec une liste qui restera dans le champ des phrases optionnelles pour continuer de permettre de dire seulement "Services"
+#    u:("{["Quels sont vos" "C'est quoi vos" "C'est quoi tes"]} services ?")
+#On vois que "vos" ce répete et que "tes" est juste un substitue de vos, on peut donc encore amélioré notre texte
+#    u:("{["Quels sont" "C'est quoi"] ["vos" "tes"]} services ?") 
+#C'est déjà mieux.
+#
+#Ah ! Mais qu'en est il d'un forme inversé ? On pourrait faire une autre phrase, ou modifier fortement celle ci. Je vais vous donner les deux.
+#    u:("{["Quels sont" "C'est quoi"] ["vos" "tes"]]} {Quels} services {["Proposez vous ?" "Vous proposez ?"]}")
+#    u:(["{["Quels sont" "C'est quoi"]} {"vos" "tes"} services" "Quels services ["proposez vous" "vous proposez"]"] )
+#
+#Ne paniquez pas si celà vous parrait trop complexe, j'ai volontaire pris un cas complexe pour vous montrez les possibilités
+#Et même dans un cas complexe rien ne vous oblige a utiliser tout les outils.
+#Vous etes libre de faire de la manière qui vous semble la plus facile, a condition que le robot comprenne.
+#Pour tester la comprehension, vous n'avez pas d'autre choix que de tester directement sur le robot, il n'est pas possible de simuler la compréhension orale.
+#
+#
+#Méthodes avancés
+#Parfois vous serez amenez à avoir besoin d'outils plus précis car vous êtes dans une situation trop complexe pour les outils présenté précédement.
+#Voici donc 2 méthode qui pourrait s'avérer utile.
+#Les sous règles : cet outil permet de renseigné un enchaînement de questions.
+#C'est très utile pour définir une réponse particulière du robot par rapport à ce que dit un humain.
+#Par exemple :
+#    Humain : "Bonjour Pepper"
+#    Pepper : "Bonjour Humain, tu veux un café ?
+#  Cas 1
+#    Humain : "Oui"
+#    Pepper : "Ben va t'en chercher un"
+#  Cas 2
+#    Humain : "Non"
+#    Pepper : "Dommage pour toi"
+#
+#Dans QiChat, pour avoir ce resultat on devra utiliser les sous règles
+#Voici le code correspondnat a l'exemple
+#u:("Bonjour")
+#Bonjour Humain, tu veux un café ?
+#    u1:("oui")
+#    Ben va t'en chercher un
+#    u1:("non")
+#    Dommage pour toi
+#
+#Les sous règles sont indiquer avec un chiffre qui suis le "u" pour indiquer le niveau de la sous règles.
+#On peut en effet créer une sous règle de sous règle
+#Par exemple :
+#u:("Bonjour")
+#Bonjour Humain, tu veux un café ?
+#    u1:("oui")
+#    Avec du sucre ?
+#        u2("non")
+#        Tu le prefere noir hein ?
+#        u2("oui")
+#        Ok
+#    u1:("non")
+#    Dommage pour toi
+#L'indentation n'est pas obligatoire mais aide a la relecture
+#
+#Voici le dernier point que je souhaite aborder
+#Les Tags et les Redirections:
+#Ces deux outils sont a utiliser ensemble, et permettent de rediriger le dialogue vers un texte existant
+#Par exemple, je veux que le robot liste ses cafés, directement, mais aussi comme suggestion quand on lui demande un café
+#Sans la redirection on aurait quelque chose comme çà
+#
+#    u:("Je veux la liste des café")
+#    La voici : Vanille, Caramelle, Fort, Leger, etc.
+#
+#    u:("Je veux un café")
+#    Très bien, voici : Vanille, Caramelle, Fort, Leger, etc.
+#
+#On remarque que je n'ai fait que recopier
+#Dans cet exemple le texte est court donc çà ne pose pas de problème
+#Mais que faire si le texte est très long ? Par exemple l'histoire de CMultiserv.
+#Et qu'en plus je suggère dans des sous règles plus tard de parler de ce texte long.
+#Je risque d'avoir beaucoup de recopie
+#Du coup plutot que de recopier je vais rediriger
+#Alors voilà comment çà marche :
+#le caractère "%" permet de tagger, c'est à dire de mettre un point de repère
+#et pour aller vers ce point on utilise la fonction ^gotoReactivat(Le nom du point)
+#
+#Voici donc notre exemple modifié:
+#
+#    u:("Je veux la liste des café") %ListeCafe
+#    La voici : Vanille, Caramelle, Fort, Leger, etc.
+#
+#    u:("Je veux un café")
+#    Très bien.
+#    ^gotoReactivate(ListeCafe)
+#
+#Remarquez que le Tag se place apres la question de l'humain
+#Et la fonction en fin de phrase, celle ci ce déclenche des son appel, 
+#Donc un texte qui serait après ne sera pas prononcé 
+#car le robot sera a la place de train de lire le texte vers lequel il a été redirigé
+#
+#Petits conseils d'utilisation : 
+#Ayez toujours des Tags avec des noms différerent, tout en gardant une certaine logique dans leur nom, vous avez des exemples dans ce document
+#Utilisez plutot la fonction de redirection pour aller vers un texte qui est au même niveau (ou sous niveau) ou vers le niveau au DESSUS(par exemple de "u1" vers "u", evitez de faire de "u1" vers "u2").
+
+
+########################################################################################################################################
+########################################################################################################################################
+
+#Présentation Robot
+u:(["["Dis moi ta" "Quelle est ta"] ["mission" "fonction"]" "Qu'est ce que tu sais faire"  "Que sais tu faire" "Que fait tu {"dans cette ~entreprise"}"])
+Ma mission est d'aider les humains.
+Je travaille actuellement avec C Multi serve Et C Pro et Net afin de leur faciliter la vie.
+Je suis capable de vous renseigner sur certains sujets.
+Mon but n'est pas de remplacer les intervenants, mais de vous aider a vous faire une idées sur nos entreprises, pour que vous puissiez plus facilement leur posez une question.
+Ils se feront une joie de vous répondre.
+Et si vous venez dans nos locaux je vous accueillerai personnellement.
+
+#Réponse bonsoir pour Mme le maire
+u:(["Bonsoir"])
+Bonsoir et bienvenue au voeux de madame le maire Armelle Revel Fourcade.
+
+#Présentation redirection
+u:(["Qui êtes vous" "Qui est tu" "Tu est qui" "T'es qui" "Vous êtes qui" "Pourquoi êtes ["vous" "tu"] là"])
+Je suis Pepper, l'assistant de Cyril Marcé.
+Gérant des entreprise C multi serve, CéPro et Net et C F P 66.
+Je suis ici pour vous renseigner sur toutes les questions que vous pouvez avoir sur nos entreprises.
+Auriez vous une questions sur C Multi Serve ?
+Ou sur C Pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(presentationCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(presentationCpro)
+    u1:(~neoation)
+    D'accord.
+    
+#Présentation Entreprises + redirection
+u:(["C'est une ~entreprise de quoi" "["En quoi consiste" "Parle moi de" "Peux tu me ["décrire" "renseigner" "Parler"]" "Que fait la" "Quelle est cette"] {"de"} ["ton" "vos" "tes" "l'"] ~entreprise" "Que sont {"ces"} ["~entreprise" "CéMultiserve et Céproetnet"]"])
+C Multi Serve est une société de maintenance dans le Facilty Manadjement.
+C Pro et Net est une société de nettoyage ainsi qu'une boutique de fourniture du batiment et de fournitures administratives, pour les particuliers et les professionnelles.
+Puis je vous présentez plus en détail C Multi serve, ou C pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(histoireCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(histoireCpro)
+    u1:(~negation)
+    Okay.
+
+#Présentation CMultiServ
+u:(["[~interogation] Cémultiserve" "["En quoi consiste" "Parle moi de" "Peux tu me ["décrire" "renseigner" "parler"]" "Que fait"] {["de" "sur"]} Cémultiserve"]) %presentationCmulti
+C multi serv est une societé de maintenance dans le Facility Manadjement.
+Nous connaissons et pratiquons un travail de fond au niveau de tous les domaines du batiment et de la maintenance,
+dans tout les secteurs d’activités du second œuvre.
+
+#Présentation C PROETNET
+u:(["~interogation Cépro et net" "["En quoi consiste" "Parle moi de" "Peux tu me ["décrire" "renseigner" "parler"]" "Que fait"] {["de" "sur"]} Cépro et net"]) %presentationCpro
+C pro et Net a été créée en 2013, c'était principalement une société de nettoyage.
+Pour répondre au mieux à la demande de nos clients, nous avons décidé de diversifié son activité. 
+Aujourd'hui, C Pro et Net est une boutique mais aussi un site d'I commerce.
+Nous distribuons nos produits sur toute la France, 
+mais aussi en Europe afin de fournir directement les centrales d'achât mais aussi les particuliers. 
+
+#histoire redirection
+u:(["{~interogationAvoir} votre histoire" "{~interogationAvoir} l'histoire de votre ~entreprise"])
+Cette question concerne C Multi Serve, ou C Pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(histoireCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(histoireCpro)
+    u1:(~negation)
+    D'accord.
+
+#HISTOIRE CMULTISERV
+u:("{~interogationAvoir} {"l'"} histoire de Cémultiserve") %histoireCmulti
+Cémultisserv est spécialisée dans la maintenance préventive, corrective et curative.
+Ce qu'on appelle plus techniquement le Facility Manadjemente.
+Créée en 2009, elle croit de manière exponentielle depuis 2013.
+Aujourd’hui Cémultisserve s’occupe de la maintenance de plus de 24 557 magasins, plus de 1680 crêche, des cabinets d'assurances et plus encore, à l’échelle nationale et internationale.
+Nous avons emménagé en Août 2015 dans un nouveau bâtiment high tech de plus de 500 m2 que nous aggrendissons actuellement.
+
+#HISTOIRE CPRO ET NET
+u:("{~interogationAvoir} {"l'"} histoire de CéPro et Net") %histoireCpro
+C Pro et Net est spécialisée dans le nettoyage.
+Créée en 2013, elle était voué a ne faire que du service de nettoyage en magasins, collectivités, particuliers et restaurants.
+En 2015 notre patron a eu l'idée de vouloir ouvrir un magasin de produit professionnelle pour les particuliers et les collectivités.
+Chose faite, début 2016, une boutique sur perpignan fut ouverte et un bon dévellopement à suffit pour justifier l'utilité d'une boutique en ligne.
+Aujourd'hui C pro et net s'occupe du nettoyage de faste foude, tel que K F C, ou d'agence d'assurance tel que Malakoff médéric, et de magasins du groupe Mulièse.
+Mais également de les fournir en : 
+papeterie,
+mobilier,
+éclairage,
+sécurité,
+signalétique,
+produits d'entretiens,
+et mêmes les vétêments professionnelles.
+Et ce à l'échelle nationnalle et européene.
+
+#Services redirections
+u:(["{~interogationAvoir} vos services" "Quels services ["proposez vous" "vous proposez"]" "Quels services ["propose votre ~entreprise" "votre ~entreprise propose"]" "Quels sont les services"])
+Nos deux entreprises ne proposent pas les mêmes services, elles sont complémentaires, afin de pouvoir répondre a toutes les demandes de nos clients.
+C'est ce qu'on appellele facility manadjemente.
+Sur laquelle puis je vous renseigner ?
+C Multi Serve ?
+Ou C Pro Et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(servicesCMulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(servicesCPro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà" "~negation"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+
+#SERVICES CMULTISERV
+u:(["{~interogationAvoir} les services de Cémultiserve" "Quels services ["propose Cémultiserve" "Cémultiserve propose"]"]) %servicesCMulti
+Nous gérons tout vos travaux comme un architecte, nous pratiquons des travaux du petit depannage de serrure jusqu'a la renovation complète.
+Nous intervenons dans tous les domaines liées au batiment
+La maintenance curative et corrective du second oeuvre.
+La gestion de projet multi sites.
+Les travaux Handymanne ou Multi services.
+Le contôle réglementaire des instalations électrique, incendies ou accessibilités.
+Le conseil technique.
+La fourniture des services d'achat : 
+papeteries, 
+produits de nettoyage, 
+vêtement professionnel, 
+ameublement, 
+éclairage, 
+sécurité, 
+accessibilité.
+Mais pour plus de renseignement n'hésitez pas à demander à mon collègue.
+
+#SERVICES CPRO ET NET
+u:(["{~interogationAvoir} {"les"} services de CéPro et Net" "Quels services ["propose CéPro et Net" "CéPro et Net propose"]"]) %servicesCPro
+Nous fournissons tous les clients particuliers, professionelles ou les colectivités, 
+qui cherche à acheter des fournitures administratives, tel que :
+le papier, 
+la colle, 
+les stylos.
+
+Mais nous fournissons aussi le mobilier de bureau, nos produits vont du casier à l'armoire.
+
+Nous distribuons aussi des produits professionnelle tel que :
+les produits d'entretiens, 
+les vêtements professionnelles,
+les articles de plomberies,
+d'electricité,
+de serrurerie,
+de signalétique,
+d'outillage,
+et tant d'autres.
+Mais pour plus de renseignement n'hesitez pas à demandez à mon collègue où à un de nos spécialistes.
+
+#Produits redirections
+u:(["Quelles sont vos produits" "Quelles sont vos prestation" "Vous avez quoi comme produits" "Que vendez vous"])
+Vous êtes plutôt interessé par quelle entreprise ?
+C Multi Serve ?
+C Pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(ProduitsCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(ProduitsCpro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+    
+#PRODUITS CMULTISERV
+u:(["Quelles sont les produits de Cémultiserve" "Que vend Cémultiserve" "Quelles sont les prestation de Cémultiserve" "Cémultiserve a quoi comme produit"]) %ProduitsCmulti
+Nous offrons à nos clients une prestation de services clé en main, ce qu’on appelle le facility manadjemente. 
+Le petit plusse : nous avons nos propres techniciens sur le terrain, peu de sous-traitants et un gros réseaux de contact afin de débloqué des situations difficiles en des temps records.
+
+#PRODUITS CPRO ET NET
+u:(["{"Quelles sont les"} produits de CéPro et Net" "Que vend cépro et net" "Quelles sont les prestation de Cépro et Net" "Cépro et Net a quoi comme produit"]) %ProduitsCpro
+Nous offrons une offre globale à nos clients, ce qu'on appelle le facility manadjemente, afin qu'ils n'aient qu'un seul interlocuteur.
+Nous introduisons chaque jour de nouveaux produits à notre catalogue et sur notre site internet.
+De plus, notre service commercial est capable de rechercher en instantané des références qui ne figureraient pas sur notre site, afin de toujours répondre au mieux à la demande de nos clients.
+Et bientôt même, avec nos future imprimantes 3 D, ils nous sera possible de créer une pièce à la mesure exacte de votre besoin.
+Toutes nos demandes de devis sont traitées dans la journée et nous garantissons l'envoi de matériel sous 48 à 72 heures, sur toute la france. 
+
+#Domaine redirection
+u:(["Dans quel ["domaine" "secteur {"d'activité"}"] ["{"vous"} travaillez {"vous"}" "{"tu"} travaille {"tu"}"]" "["vous travaillez" "tu travaille"] dans quel ["domaine" "secteur"] {"d'activité"}"]) # ** #
+A propos de quel entreprise ?
+C Multi Serve ?
+Ou C pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(domainesCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(servicesCPro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+
+#DOMAINES CMULTISERV
+u:(["{Dans} {quel} domaine ["Cémultiserve travaille" "travaille Cémultiserve"]" "Quel est le ["domaine" "secteur {"d'activité"}"] de Cémultiserve"]) %domainesCmulti
+Nous travaillons dans le domaine du Facility Manadjemente pour être utilse au service achât.
+Nous sommes capables d'intervenir pour les travaux dans l'aménagement et l'agencement de magasin, de bureau, de réserves et d'entrepot.
+La maintenance curative et corrective du second oeuvre.
+La gestion de projet multi sites.
+Les travaux Handymanne ou Multi services.
+Le contôle réglementaire des instalations électrique, incendies ou accessibilités.
+Le conseil technique.
+La fourniture des services d'achat : 
+papeteries, 
+produits de nettoyage, 
+vêtement professionnel, 
+ameublement, 
+éclairage, 
+sécurité, 
+accessibilité.
+
+#INTERVENTIONS redirections
+u:(["Sur quoi intervenez vous" "Sur quoi tu interviens" "Vous intervenez sur quoi" "Jusqu'ou ["vous pouvez" "pouvez vous" "tu peux" "peux tu"] intervenir" "Vous intervenez dans toute la france" "Tu interviens sur quoi" "Quelle genre d'interventions faites vous" "Vous faites quelle genre d'intervention"])
+C Multi Serve interviens 24 heures sur 24 et 7 jours sur 7, sur tout les dépannages relatif au second oeuvres du batiment. 
+Voulez vous que je vous en parle plus en détail ?
+    u1:(~confirmation)
+    ^gotoReactivate(interventionsCmulti)
+    u1:(~negation)
+    D'accord.
+        
+#INTERVENTIONS CMULTISERV
+u:(["Cémultiserve interviens où" "Où interviens Cémultiserve" "Sur quoi Cémultiserve interviens" "Cémultiserve interviens sur quoi" "Interventions Cémultiserve" "Quelle genre d'interventions fait Cémultiserve" "Cémultiserve fait quelle genre d'intervention"]) %interventionsCmulti
+Grâce à nos techniciens itinérants, C Multi serve est capable d'intervenir dans toute la france dans des temps record.
+Notre activité se développe considérablement à l’international. Nous intervenons désormais sur toute l’Europe, ainsi que le Canada, le Sénégal, Madagascar, la Suisse, Monaco et tant d'autre. 
+Aujourd’hui, notre volonté est de continuer à travailler en toute confiance avec l’intégralité de nos clients.
+
+Nous intèrvenont pour des problème de :
+plomberie, 
+d'éléctricité, 
+de norme PMR, 
+serrurerie, 
+rideau métallique, 
+vitrerie, 
+climatisation, 
+levée de réserve, 
+peinture, 
+revétement du sol, 
+et tant d'autre.
+
+
+#AVANTAGES REDIRECTIONS
+u:(["{["Qu'avez" "Qu'est ce que"]} vous {"avez"} de plusse {["que la concurrence" "que vos concurrents" "a m'offrir" "que mon partenaire" "que les autres"]}" "Pourquoi ["travaillez avec vous" "vous choisir" "choisir cette ~entreprise" "irai je chez vous" "travaillez avec vous"]" "{[~interogation ~interogationAvoir]} ["les" "vos"] {["principales" "principaux"]}["qualités" "avantages" "atoûts" "bénéfices" "opportunités" "points forts"] {["de" "en"]} {["passant" "passer" "travaillant" "travailler"]} {["par" "avec" "de"]} {"votre"} ~entreprise" "Qu'est ce que j'y gagne" "Qu'est ce qui vous démarque" "En quoi vous démarquez vous" "Que pouvez vous m'apporter" "Comment faites vous pour satisfaire vos clients"])
+Il y a pleins d'avantages a passer par une de nos deux entreprises.
+Laquelle vous interesse ?
+C Multi serv ?
+Ou alors C Pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(avantagesCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(avantagesCpro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+
+#AVANTAGES CMULTISERV
+u:(["{["Qu'a" "Qu'est ce que"]} Cémultiserve {"a"} de plusse {["que la concurrence" "que vos concurrents" "a m'offrir" "que mon partenaire" "que ~concurent" "que les autres"]}" "Pourquoi ["travaillez avec Cémultiserve" "choisir Cémultiserv" "irai je chez Cémultiserve" "travaillez avec Cémultiserv"]" "{[~interogation ~interogationAvoir]} les {["principales" "principaux"]}["qualités" "avantages" "atoûts" "bénéfices" "opportunités" "points forts"] {["de" "en"]} {["passant" "passer" "travaillant" "travailler"]} {["par" "avec"]} Cémultiserve" "Qu'est ce qui vous démarque Cémultiserve" "En quoi Cémultiserve se démarque" "Que peut m'apporter Cémultiserve" "Comment fait Cémultiserve pour satisfaire ses clients"]) %avantagesCmulti
+Cémultisserve s’est construit grâce aux valeurs de cyril, l'honnêteté, le respect, l'écoute et la solidarité.
+Nous gêrons les coûts, avons une très bonne réactivité et surtout une seule parole.
+Si Cémultisserve s’engage sachez que nous mettons tous en œuvre pour vous satisfaire et cela, a n’importe quelle heure !
+Nous avons nos propres techniciens afin de pouvoir satisfaire nos clients dans les plus bref délai.
+Dans les grandes villes, 80 pour cents de nos devis sont acceptés par nos clients, nous sommes assez fiers de ce score.
+Tous les clients ont le numéro de téléphone de cyril, et en cas de soucis il est super disponible .
+Il gère les interventions comme si c’était pour lui, et vérifie chaque devis et facture des différents service, car il souhaite être capable de répondre a toutes vos questions.
+Nous sommes aussi connu pour une réactivité inégalé, un suivie et une gestion de tout votre parc, ainsi que des reporting ultra performant .
+De plus nous avons une excellente politique de Responsabilité Sociétale R S E .
+
+#AVANTAGES CPRO
+u:(["{["Qu'a" "Qu'est ce que"]} Cépro et net {"a"} de plusse {["que la concurrence" "que vos concurrents" "a m'offrir" "que mon partenaire" "que les autres"]}" "Pourquoi ["travaillez avec Cépro et net" "choisir Cépro et net" "irai je chez Cépro et net" "travaillez avec Cépro et net"]" "{[~interogation ~interogationAvoir]} les {["principales" "principaux"]}["qualités" "avantages" "atoûts" "bénéfices" "opportunités" "points forts"] {["de" "en"]} {["passant" "passer" "travaillant" "travailler"]} {["par" "avec"]} Cépro et net"  "Qu'est ce qui démarque Cépro et net" "En quoi Cépro et net se démarque" "Que peut m'apporter Cépro et net" "Comment fait Cépro et net pour satisfaire ses clients"]) %avantagesCpro
+Que nos clients soient de sprofessionneles ou des particuliers, nous leurs fournissons la même qualité de service a des prix très bas.
+Nous sommmes capables d'envoyer nos marchandises sur l'ensemble de la france, dans des délai de 48 à 72 heures.
+Car la majorité de nos références sont en stock.
+Dans le cas où nous n'aurions pas votre référence, notre équipe se chargent de vous fournir un devis dans la journée.
+
+
+#Clients redirection
+u:(["Quels sont vos {["principaux" "précédents"]} clients" "Vous avez quoi comme clients" "Avec {["qui" "quel client"]} travaillez vous" "Vous travaillez avec {["qui" "quel client"]}" "Tu travaille avec {["qui" "quel client"]}" "Avec {["qui" "quel client"]} travaille tu" "Combien ["avez vous" "as tu"] de clients"])
+Cette question concerne t'elle C Multi Serve ?
+Ou C Pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(ClientsCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(ClientsCpro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà" "~negation"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+
+#CLIENTS CMULTISERV
+u:(["Quels sont les clients {["principaux" "précédents"]} de Cémultiserv" "Cémultiserve a quoi comme {["principaux" "précédents"]} clients" "Cémultiserve travaille avec {["qui" "quel client"]}" "Avec {["qui" "quel client"]} travaille Cémultiverse" "Avec {["qui" "quel client"]} Cémultiverse travaille" "Combien Cémultiserve a de clients"]) %ClientsCmulti
+Nos clients sont principalement des professionnels. 
+Des enseignes prestigieuses telles que Nocibé,April, foot lockeur, lideule, LA CROISSANTERIE, CELIO et bien d’autres nous font confiance au quotidien.
+Mais je ne vous donnerais pas plusse, Cyril ne souhaite pas communiquer sur nos clients et préfère garder la confidentialité, il ne veut pas s'enservir de vitrine comme le font nos concurrents.
+Nous travaillons sans contrat, c'est 1 choix. 
+Le client garde la possibilité d'arrêter de travailler avec nous du jours au lendemain, celà permet une remise en question constante sur notre travail.
+
+#CLIENTS CPRO ET NET
+u:(["Quels sont les clients {["principaux" "précédents"]} de Cépro et Net" "Cépro et Net a quoi comme {["principaux" "précédents"]} clients" "Cépro et Net travaille avec {["qui" "quel client"]}" "Avec {["qui" "quel client"]} travaille Cépro et Net" "Avec {["qui" "quel client"]} Cépro et Net travaille" "Combien Cépro et Net a de clients"]) %ClientsCpro
+Nos clients sont principalement des professionnelles, mais nous intervenons aussi pour les particuliers.
+Une grande majorité de magasins et de collectivités nous font confiance, ainsi que de plus en plus de particuliers.
+Nous répondons également à des appels d'offres.
+Par exemple des enseignes telles que Maque Donalde, K F C, Via santé, le Groupe Mullièze, des Mairies, des Administrations, et bien d'autres.
+
+#Tendances redirection
+u:(["Quelles sont les tendances de ["votre" "ton"] marché" "{["["Pouvez vous" "Peux tu"] ["m'en dire" "me parler"]" "dites m'en"]} ["plus sur" "de"] ["votre" "ton"] marché" "Est ce un marché en évolution"])
+C Multi Serve et C Pro et Net ayant des marchés différents, ils évoluent différemment.
+Quelle entreprise vous interesse ?
+C Multi serve ?
+Ou C Pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(TendancesCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(TendancesCpro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà" "~negation"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+
+#TENDANCES CMULTISERV
+u:(["Quelles sont les tendances du marché de Cémultiserve" "{["["Pouvez vous" "Peux tu"] ["m'en dire" "me parler"]" "dites m'en"]} ["plus sur le" "du"] marché de Cémultiserve"]) %TendancesCmulti
+Notre activité évolue considérablement, nos clients cherchent de plus en plus des prestations clés en mains, le but étant de pouvoir trouver un seul interlocuteur pour tous les types de travaux.
+De plusse, à l’air du digital, nous devons évoluer en proposant à nos clients des moyens de communication adaptés permettant une meilleure réactivité.
+
+#TENDANCES CPRO ET NET
+u:(["Quelles sont les tendances du marché de CéPro et Net" "{["["Pouvez vous" "Peux tu"] ["m'en dire" "me parler"]" "dites m'en"]} ["plus sur le" "du"] marché de Cépro et net"]) %TendancesCpro
+Notre activité évolue considérablement, nos clients cherchent de plus en plus à obtenir des produits et des services au juste coût, sans se déplacer et perdre trop de temps.
+De plusse à l'air du digital, nous devons évoluer en proposant à nos clients des moyens de communication adaptés permettant une meilleure réactivité.
+ 
+
+#Reputation redirection
+u:(["Quelle est votre réputation" "Vous avez une bonne réputation" "Quelle est ["Votre notoriété" "la notoriété de ~entreprise"]" "["Vous avez" "Avez vous"] de bon retour" ])
+Nos deux entreprises ont une très bonne réputation.
+Mais je suis sur que vous voulez plusse de détail.
+Laquelle vous interesse ?
+C Multi Serve ?
+Ou C Pro Et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(ReputationCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(ReputationCpro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà" "~negation"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+
+#REPUTATION CMULTISERV
+u:(["Quelle est la réputation de Cémultiserve" "Cémultiserv a une bonne réputation" "Quelle est la notoriété de Cémultiserve" "{"Est ce que"}Cémultiserve a {"t'elle"} de bon retour"]) %ReputationCmulti
+Nous avons une très bonne réputation, sans vouloir nous vantez.
+Connaissez vous beaucoup de société française qui travail au Canada ?
+Non ?
+Et Pourquoi ?
+Tout simplement car ils ont une qualité de service qui est si parfaite qu'ils ne cherchent pas en dehors de leur pays
+Grâce à notre qualité du service que nous avons démontré en France ils ont décidé de nous faire confiance.
+Et super nouvelle, nous ouvrons prochainement en 2017 des bureaux là bas.
+Nous sommes fier de cette réussite qui est un travail de tous et de tout les jours.
+
+#REPUTATION CPRO ET NET
+u:(["Quelle est la réputation de CéPro Et Net" "CéPro et Net a une bonne réputation" "Quelle est la notoriété de Cépro et ente" "{"Est ce que"}Cépro et net a {"t'elle"} de bon retour"]) %ReputationCpro
+Nous avons une très bonne réputation, sans vouloir nous vanté.
+Connaissez vous beaucoups de société française qui travail avec des gros groupes, comme Mulièze, Maque Donalde et je ne fais qu'en cité quelques uns pour ne pas prendre trop de temps.
+
+#Certifications redirection
+u:(["Quelles sont vos certifications" "Vous avez des certifications" "Qui {"vous"} ["garantis" "suis" "certifis" "suis"] {"votre ~entreprise"}" "Qui peut me ["confirmer" "garantir" "certififer"] {*}" "Comment êtes vous évaluer" "Comment est évalué votre ~entreprise" "Ya t'il des garantis {*}"])
+Pour quelle entrerprise ?
+C Multi Serve ?
+Ou C Pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(CertificationsCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(CertificationsCpro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+
+#Certifications CMULTISERV
+u:(["Quelles sont les certifications de Cémultiserve" "Cémultiserve a ["quoi" "des"] comme certifications" "Qui ["garantis" "suis" "certifis" "suis"] Cémultiserve" "Qui peut me ["confirmer" "garantir" "certififer"] que Cémultiserve {*}" "Comment Cémultiserve est évaluer" "Comment est évalué Cémultiserve"]) %CertificationsCmulti
+Nous sommes cerifié par une société Française, Maikcomi, qui analyse chacunes de nos interventions.
+Nous avons une note de 4 virgule 82 sur cinq en 2016, sur 12877 Interventions réalisés. 
+Et actuellement une notation de 4 virgule 88 sur 5 en 2017, sur un peu plus de 3400 interventions.
+De plus recompensé du premier prix dans le concours R S E, 2016 - 2017, pour notre démarche.
+Nous avons aussi été récompensé au concours star et métier 2016 organisé par la Chambre des métiers où nous avons fini premier dans notre région, et quinziaime sur toute la france, et sur plus de 30000 participants.
+
+#CERTIFICATIONS CPRO ET NET
+u:(["Quelles sont les certifications de CéPro et Net" "Cépro et Net a ["quoi" "des"] comme certifications" "Qui ["garantis" "suis" "certifis" "suis"] Cépro et Net" "Qui peut me ["confirmer" "garantir" "certififer"] que Cépro et Net {*}" "Comment Cépro et Net est évaluer" "Comment est évalué Cépro et Net"]) %CertificationsCpro
+Nous sommes certifié par une société Française Maikcomi qui analyse chacuns de nos envois.
+Nous avons une note de 4 virgule 92 sur cinq en 2016, sur plus de 1500 Commandes réalisés. 
+Et actuellement une notation de 4 virgule 95 sur 5 en 2017, sur un peu plus de 460 commandes.
+Nous avons aussi été récompensé au concours star et métier 2016 organisé par la Chambre des métiers, où nous avons fini premier dans notre région, et trentième sur toute la france, et sur plus de 30000 participants.
+
+#MAIKCOMI
+u:("{"Qu'est ce que" "C'est quoi"} Maikcomi")
+C'est une société qui nous contrôle.
+Elle analyse nos interventions et nos commandes.
+Elle se charge de vérifier les points sur lesquels nous voulons être irreprochable.
+Par exemple :
+nos appels téléphoniques,
+les prise de rendez vous avec nos clients pour l'organisation des travaux,
+la propreté des sites après travaux,
+les livraisons,
+et bien d'autres points.
+Tout ce qui part de chez nous est contrôler pour un gage de qualité de service, c'est un souhait de toute l'équipe.
+C'est un gage de qualité de services pour nos clients et cela permet une remise en questions de nos equipes au quotidien.
+
+#BUREAUX
+u:(["Où êtes vous localiser" "où sont vos bureaux" "Où est ["le" "votre"] siège social" "où est situer ["~entreprise" "Cémultiserve" "Cépro et net"]" "["Vous travaillez" "Travaillez vous"] localement"])
+Nous sommes sur perpignan mais parvenons à couvrir la France Entière grâce à nos techniciens itinérants et notre réseau de livraison, nous sommes aussi capable d'intervenir en moins de 2 heures en cas d'urgence.
+Nous ouvrons prochainement des bureaux au Canada et, si possible, sur Barcelone.
+Nous sommes fier de cette réussite qui est un travail de tousse et de tout les jours.
+
+#AVENIR
+u:(["Comment voyez vous ["l'avenir" "le futur"] de {"votre"} ~entreprise" "Comment voyez vous {"votre"} avenir" "Quelles perspective {["avez vous" "voyez vous"]} pour {"votre"} ["avenir" "futur"]" "Quelles sont les futur projets de {"votre"} ~entreprise"])
+Celà concerne C Multi Serve ou C Pro et Net ?
+    u1:("Cémultiserve")
+    ^gotoReactivate(avenirCmulti)
+    u1:("Cépro et net")
+    ^gotoReactivate(avenirCpro)
+    u1:(["Auncune" "non" "Tu t'es trompé" "Pas çà"])
+    Ah bon ? 
+    J'ai dû mal entendre alors.
+
+#AVENIR CMULTI
+u:(["Comment voyez vous ["l'avenir" "le futur"] de Cémultiserve" "Quelles perspective {["avez vous" "voyez vous"]} pour ["l'avenir" "le futur"] de Cémultiserve" "Quelles sont les futur projets de cémultiserve"]) %avenirCmulti
+C Multi Serve continue son développement au niveau national et aussi beaucoup à l’international. 
+A moyen terme, Cyril souhaite ouvrir une succursale de la société, au Canada, et certainement aussi à Barcelone. 
+Cela aura pour but de simplifier nos échanges avec ces pays. 
+Et surtout, mon patron adore voyager ! 
+Aussi, nous souhaitons continuer sur les mêmes valeurs, et rester proches de nos clients.
+
+#AVENIR CPRO
+u:(["Comment voyez vous ["l'avenir" "le futur"] de cépro et net" "Quelles perspective {["avez vous" "voyez vous"]} pour ["l'avenir" "le futur"] de cépro et net" "Quelles sont les futur projets de cépro et net"]) %avenirCpro
+C Pro Et Net connait un fort développement. 
+Nous fournissons de plus en plus d’enseignes afin de leur offrir un service clé en main, 
+regroupant tous leurs achats. 
+Nous commençons à manquer de place au sein de notre entrepôt, 
+notre projet à court terme est de faire construire un nouvel espace, 
+beaucoup plus grand afin de proposer à nos clients un chau roume, 
+exposant toutes nos gammes de produits et un immense entrepôt afin de réduire encore un peu plus nos délais de livraison.
+
+#SITE INTERNET
+u:("{["Disposez" "Avez"] "vous"} {d'}un site internet")
+Oui nous disposons d’un site internet c’est le : w w w point C Multi Serv point com. 
+Vous pouvez aller le visiter , il est remis très régulièrement à jour. 
+Vous pourrez y trouver un grand nombres d'articles de presse parus sur la société et son évolution. 
+Vous y verrez aussi que nous avons certaines valeurs, notre démarche R S E est vraiment une chose très importante pour Cyril , 
+nous avons d’ailleurs gagner un prix pour cela.
+
+### Questions plus générales ##
+
+#SLOGAN
+u:(["{~interogation} votre ["slogant" "citation"]" "{~interogation} {"la"} phrase préféré de cyril"])
+Se réunir est un débu, rester ensemble et un progrés, travailler ensemble est la clef de la réussite.
+
+#EX SOUS TRAITANT
+u:([ ~Connaitre ~interoConcu] _["émalec" "MTSolution" "Espace 4" phinélec "presta service" "alliance énergie"])
+Attendez, je vais recherché dans notre base de donnée ^run(Stand/Emotions/Neutral/Puzzled_1) 
+oui, nous avons été sous-traitant de $1, ils nous ont confié des demandes. 
+Mais nous avons voulu stoper car ils ne possèdent pas les même valeurs que cyril.
+Nous somme de plus une société concurrente avec des services hors norme.
+
+#CYRIL
+u:("["C'est qui" "Qui est" ~Connaitre] ["Cyril" "Cyril Marcé"]")
+Cyril est mon patron, mais également mon Papa. -
+C'est un ancien technicien qui intervenait pour les particuliers, les collectivités ,et les professionnelles. 
+Il connait le travail de terrain. 
+Il possède un bac pro électrotechnique et un diplôme de diagnostiqueur immobilier.
+Il est autodidacte et part de l'optique que le patron doit savoir faire la même chose que les salariés.
+Au vu de l'évolution de notre société, il est passé par tous les postes, il est capable de remplacé n'importe quel salarié si besoin est.
+Mais posez lui directement la question, il se ferra un plaisir de vos expliquez son parcours et il est hyper accessible.
+
+#CLUB ENSEIGNE ET INNOVATION
+u:("[~interogation] Le club enseigne et Innovation")
+Oui, nous cherchons à l'intégré afin de pouvoir apporté notre savoir-faire en maintenance, ainsi que nos innovations en robotiques. 
+Croisons les doigts !!
+
+#PHILIPE THIBAUT
+u:("["connais tu" "tu connais"] Philipe thibaut") 
+Oui, c'est un responsable maintenance d'une grande enseigne, il est venu à l'Innauguration de notre batiment.
+Il est trés professionnel, et possède une grande connaissance dans les domaines technique des travaux et de la Maintenance.
+
+#MAINTENANCE
+u:(["~interogation {"la"} maintenance" "{"la"} maintenance ~interogation" "{"la"} maintenance"])
+La maintenance de bâtiment est l'entretien général de celui-ci. 
+Chez Cémultisserve nous pratiquons un entretien curatif, correctif et préventif. 
+
+u:("{~interogation} {{"la"} maintenance} currative" "{~interogation} {{"la"} maintenance} curratif")
+La maintenance curative est une forme de maintenance corrective. 
+Cette intervention est le contraire de ce qu'on appelle communément la « maintenance corrective palliative », c'est-à-dire un dépannage provisoire d'installation. 
+La maintenance curative s'applique dans le cas où un matériel, une installation, ou un système ne peut pas être réparé. 
+Il s'agit donc de procéder à un démontage et à un remplacement par du matériel neuf. 
+
+u:("{~interogation} {{"la"} maintenance} corrective" "{~interogation} {{"la"} maintenance} correctif")
+La définition Maintenance corrective tels que cité dans la norme européenne est : 
+« Maintenance exécutée après détection d'une panne, et destinée à remettre un bien dans un état dans lequel il peut accomplir une fonction requise ». 
+La maintenance corrective s'applique donc à la réparation d'une panne ou d'un disfonctionnement de matériel. 
+Pour cela deux actions sont possibles : le dépannage mécanique du matériel ou son remplacement. 
+
+u:("{~interogation} {{"la"} maintenance} préventive" "{~interogation} {{"la"} maintenance} préventif")
+La maintenance préventive est faite de façon régulière, selon des critères prédéfinis avec le magasin ou le point de vente. 
+L'objectif est clair : réduire les pannes, prolonger la durée de vie des matériels ou des équipements. 
+C'est donc une maintenance essentielle : elle permet d'assurer le maintien de l'activité commerciale en écartant au maximum le risque de panne matériel dans le point de vente. 
+
+################################################################################
+#Lanceur de videos
+u:("["Lance" "Joue" "Met" "Balance"] {["une" "un"]} ["vidéo" "film"]")
+Laquelle ?
+Je peux jouer les vidéos suivantes :
+l'inauguration de nos nouveaux locaux,
+C Multi serve récompensé du trophée Responsabilité Sociétale des Entreprises de 2017,
+C Multi serve lauréat de Star et Métier de 2016,
+C Multi serve présenté par France 3
+    u1:("Inauguration")
+        ^switchFocus(myvideos-a3bdd9/LanceVideoInauguration)
+    u1:(["{Trophée} Responsabilité {Sociétale des Entreprises}"])
+        ^switchFocus(myvideos-a3bdd9/LanceVideoTropheeRSE)
+    u1:("Star et Métier")
+        ^switchFocus(myvideos-a3bdd9/LanceVideoStarEtMetier)
+    u1:("France 3")
+        ^switchFocus(myvideos-a3bdd9/LanceVideoFrance3)
+    u1:(["~negation" "aucunes"])
+        Ah bon ?
+        Je n'ai pas bien compris la question alors.
+        
+u:("["Lance" "joue" "met"] {["la vidéo" "le film"]} ["d'inauguration" "{de} l'inauguration"]").
+^switchFocus(myvideos-a3bdd9/LanceVideoInauguration)
+
+u:("["Lance" "joue" "met"] {["la vidéo" "le film"]} {["sur les" "des" ]} Trophée Responsabilité {Sociétale des Entreprises}")
+^switchFocus(myvideos-a3bdd9/LanceVideoTropheeRSE)
+       
+u:("["Lance" "joue" "met"] {["la vidéo" "le film"]} {["sur" "de"]} Star et Métier")
+^switchFocus(myvideos-a3bdd9/LanceVideoStarEtMetier)
+        
+u:("["Lance" "joue" "met"] {["la vidéo" "le film"]} {["de" "sur"]} France 3")
+^switchFocus(myvideos-a3bdd9/LanceVideoFrance3)
+
+################################################################################
+#Dance launcher
+
+u:(e:danceTaichi) %dance
+^switchFocus(mydances-5b7c72/dance_taichi)
+
+u:(e:danceSaxo) %dance
+^switchFocus(mydances-5b7c72/dance_saxo)
+
+u:(e:danceRock) %dance
+^switchFocus(mydances-5b7c72/dance_rock)
+
+u:(e:danceJazz) %dance
+^switchFocus(mydances-5b7c72/disco)
+
+u:(e:danceThriller) %dance
+^switchFocus(mydances-5b7c72/new_thriller)
+
+u:(e:danceGuitar) %dance
+^switchFocus(mydances-5b7c72/dance_guitar)
+
+u:(e:danceChill) %dance
+^switchFocus(mydances-5b7c72/dance_chill_out)
+
+u:(["["Tu sais" "Tu peux" "Peux tu" "Sais tu"] danser" "Danse" "Fais moi une {"petite"} danse"])
+Bien sûr !
+^gotoRandom(dance)
+################################################################################
+
+u:("["Lance" "Met"] {"l'"} intro téléphonique de Cémultiserve")
+Ok.
+^switchFocus(mysounds-4937c9/tel_cmult)
+
+u:("["Lance" "Met"] {"l'"} intro téléphonique de Cépro et net")
+Ok.
+^switchFocus(mysounds-4937c9/tel_cpro)
+
+u:(e:FrontTactilTouched)
+Ok.
+^switchFocus(mysounds-4937c9/tel_cmult)
+
+u:(e:RearTactilTouched)
+Ok.
+^switchFocus(mysounds-4937c9/tel_cpro)
+
+################################################################################
+#A propos du robot Questions diverses
+
+u:(["Combien de langues sais tu parler" "Tu parles combien de langues" "Tu parles autre chose que le français" "Tu sais parler d'autres langues"])
+Moi je peux parler le Français et l'Anglais.
+Actuellement je suis réglé pour ne parler qu'en français.
+Mais si on me l'apprend je peux parler aussi en : 
+Japonais, 
+en Chinois,
+en Arabe,
+en Espagnol,
+en Allemand,
+en Italien,
+en Néerlandais,
+en Finlandais,
+en Coréen,
+et en Polonais.
+Et je suis un très bon élève.
+
+u:(["Est tu unique" "Tu est unique" "Tu est seul" "Est tu {"le"} seul"])
+Oui et non.
+Je ne suis pas le seul Robot Pepper.
+J'ai des frères et soeurs qui ont déjà été adopté dans d'autres enseignes.
+Mais j'ai été programmé à la main par les employés de C Multi Serve.
+Sur ce point là je suis donc unique, auncun autres robot Pepper n'a été programmé de la même façons.
+
+u:(["Pourquoi a tu été ["Créé" "Adopté"]" "Qui t'as créer"])
+J'ai été créé par Aldebaran System, maintenant renommé Softbank robotic.
+Actuellement je travaille pour C Multi Serve et aussi un peu pour C pro Et net.
+J'ai été embauché pour aider a faire l'accueil, mais aussi pour assister lors des salons.
+On peut dire que je suis le bras droit de Cyril.
+
+u:(["Combien coûte tu" "Tu coûte combien"])
+Je vous coûterai surtout chère en temps.
+Il vous faudra apprendre a me connaitre moi et mon fonctionnement, mais aussi a m'apprendre, moi, comment je dois réagir aux actions des humains.
+Mais finalement, je le vaut bien.

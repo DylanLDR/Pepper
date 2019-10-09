@@ -1,0 +1,286 @@
+topic: ~AcceuilCMultiServ()
+language: frf
+
+#Bienvenue dans la page de dialogue pour Salon QiChat du Robot Pepper 
+#N'ayez pas peur je vais vous guidez
+#Première chose, le caractère "#" sert a commenter. 
+#Tout ce qui se trouver sur la droite de ce caractère n'est pas executé, n'ayez donc pas peur de mettre vos propre commentaire
+
+#Vous remarquerez aussi que certains mots ne sont pas encadré de guillemets.
+#En fait ceci : "Hello Cyril"  --> est une phrase
+#Alors que ceci : Hello --> est un mot
+#donc : Hello Cyril --> sont deux mots distincts
+
+#Ce qui suit sont des concepts,  ce sont des conteneurs de mots et de phrases.
+#Il sont surtout utilisé pour simplifié les répétitions.
+#Ne vous inquiétez pas trop de çà.
+
+concept: (entreprise) ["entreprise" "société" "boîte" "l'entreprise" "la société"]
+concept: (concurent) ["finélec" "émalec" "espace quattre" "presta service" "eugéo maintenance"]
+
+concept: (confirmation)[ok oui "pourquoi pa0s" "je veut bien" "d'accord" ouais super]
+concept: (negation)[non "je veut pas" "pas d'accord" "pas la peine"]
+concept: (plus_de_question) [{"je n'ai"} "plus de questions" ~negation]
+
+concept: (interogationInverse)["Cé quoi" "Tu connais"]
+concept: (interogation)["Qu'est ce que" "C'est quoi" "Connais tu" "Quel est" ~interogationInverse]
+concept: (interogationAvoir) ["Qu'a tu" "Qu'avez vous" "Quels sont" "Vous avez quoi" "Quel est"]
+concept: (interogationPouvoir) ["Que peux tu" "Que pouvez vous" ]
+concept: (vouloir) ["Je veux" "Je souhaite"]
+
+concept: (interoConcu)["Que pensez vous de" "Vous avez quoi de plus que"]
+concept: (Connaitre)["Vous connaissez" "Connaissez-vous" "Tu connais" "connais-tu" "Est-ce que tu connais"]
+
+########################################################################################################################################
+########################################################################################################################################
+
+#Voici la partis où vous passerez le plus de temps.
+#Bienvenu dans les règles ou aussi nommé la liste de questions
+#
+#Pour que Pepper puisse comprendre une question, il faut la lui renseigné.
+#Pour ce faire on indique une question avec "u:(La question)" que l'on appelle une règle
+#Et on indique en dessous la réponse du robot
+#Voici un exemple :
+#    u:(La question)
+#    La reponse
+#
+#La question ou les questions que l'on renseigne dans la règle sont très maléables
+#par exemple : 
+#    u:("Hello Cyril") --> Le robot attend juste la phrase "Hello Cyril" 
+#    u:("~interogation Cyril") --> Le robot attend une phrase du concept interrogation suivit du mot Cyril
+#
+#Vous avez desuite remarqué le nouveau caractère "~", celui ci sert a appeler un concept, il est uniquement utilisé dans ce cas
+#QiChat dispose de plusieurs caractère outils, qui vous seront très utiles, je vais vous en apprendre quelque uns des plus utiles.
+#
+#Quand on renseigne une question, il est possible qu'il y ai plusieurs formulations possible
+#Par exemple, comment renseigner "Qui est Cyril ?" et "C'est qui Cyril ?" ?
+#On va utiliser "[]", les crochets permettent de renseigner une liste de phrases ou de mots que le robot peut comprendre.
+#
+#Donc en utilisant les corchets on obtiendra ceci :
+#    u:(["Qui est Cyril" "C'est qui Cyril"]) --> le robot répondra correctement si il entend "Qui est Cyril ?" ou "C'est qui Cyril ?"
+#Autre version :
+#    u:(["C'est qui" "Qui est"] Cyril) --> le robot répondra correctement si il entend "Qui est Cyril ?" ou "C'est qui Cyril ?"
+#Dans le cas d'une phrase avec une partie qui ne change pas plus grande, on mettra plutot ceci :
+#    u:("["C'est qui" "Qui est"] Cyril Marcé") 
+#
+#Remarquez que la première guillemet est avant le crochet, ce n'est pas obligatoire mais c'est une bonne pratique
+#Mais on est pas limité à une seule liste, on peut très bien mettre ceci
+#    u:("["C'est qui" "Qui est"] ["Cyril Marcé" "Tatiana Loffredo"]") --> là on répond à "Qui est Cyril Marcé ?", "Qui est Tatiana Loffredo ?", "C'est qui Cyril Marcé ?" ou "C'est qui Tatiana Loffredo ?"
+#
+#
+#Nous venons de voir les listes de phrases et mots.
+#Mais que faire si je veux que le robot réponde à "Qui est Cyril" ou tout simplement à "Cyril" ?
+#La liste veut obligatoirement qu' un choix soit renseigné, elle n'est pas adapté a notre cas.
+#Nous allons donc utiliser les caractères "{}" qui permetent de renseigner un mot ou une phrase optionelle
+#Par exemple dans notre cas :
+#    u:({"Qui est"} Cyril) --> le robot répondra à "Qui est Cyril ?" mais aussi a "Cyril"
+#    u:("{"Qui est"} Cyril Marcé") --> le robot répondra à "Qui est Cyril Marcé ?" mais aussi a "Cyril Marcé"
+#
+#Vous avez maintenant en main vos principaux outils. Il y en a d'autres mais pour le moment, ceux ci suffiront amplement.
+#Car en effet je ne l'ai pas précisé, mais il est tout à fais possible de combiner ces outils !
+#Ne fuyez pas !
+#C'est pas si compliqué que çà.
+#
+#Nous allons décortiqué celà avec un exemple. Prenez la règle suivante : 
+#    u:("{["Qui est" ~Connaitre]} ["Cyril" "Cyril Marcé"]")
+#    Nous avons un concept, deux liste, dont une qui est optionnelle
+#    Le robot peut donc réponde à :
+#        "Cyril"
+#        "Cyril Marcé"
+#        "Qui est Cyril ?"
+#        "Qui est Cyril Marcé ?"
+#        "Connais tu Cyril ?"
+#        "Connais tu Cyril Marcé ?" 
+#        "Tu connais Cyril ?"
+#        "Tu connais Cyril Marcé ?" 
+#    Je me suis limité aux phrases du concept "Connaitre" qui sont logique dans notre cas
+#
+#Le mieux quand on travaille en QiChat est de partir d'une question a laquelle on souhaite répondre
+#    u:("Quels sont vos services")
+#
+#On va commencer par identifier le mot clé de la question : "Services"
+#On va l'isoler pour permettre au gens de juste dire "Services", bien sûr il ne faut pas que l'on ai une autre règle ou l'on permet aussi de dire que "services"
+#    u:("{"Quels sont vos"} services")
+#
+#Ensuite on va permettre aux gens de formuler différement avec une liste qui restera dans le champ des phrases optionnelles pour continuer de permettre de dire seulement "Services"
+#    u:("{["Quels sont vos" "C'est quoi vos" "C'est quoi tes"]} services ?")
+#On vois que "vos" ce répete et que "tes" est juste un substitue de vos, on peut donc encore amélioré notre texte
+#    u:("{["Quels sont" "C'est quoi"] ["vos" "tes"]} services ?") 
+#C'est déjà mieux.
+#
+#Ah ! Mais qu'en est il d'un forme inversé ? On pourrait faire une autre phrase, ou modifier fortement celle ci. Je vais vous donner les deux.
+#    u:("{["Quels sont" "C'est quoi"] ["vos" "tes"]]} {Quels} services {["Proposez vous ?" "Vous proposez ?"]}")
+#    u:(["{["Quels sont" "C'est quoi"]} {"vos" "tes"} services" "Quels services ["proposez vous" "vous proposez"]"] )
+#
+#Ne paniquez pas si celà vous parrait trop complexe, j'ai volontaire pris un cas complexe pour vous montrez les possibilités
+#Et même dans un cas complexe rien ne vous oblige a utiliser tout les outils.
+#Vous etes libre de faire de la manière qui vous semble la plus facile, a condition que le robot comprenne.
+#Pour tester la comprehension, vous n'avez pas d'autre choix que de tester directement sur le robot, il n'est pas possible de simuler la compréhension orale.
+#
+#
+#Méthodes avancés
+#Parfois vous serez amenez à avoir besoin d'outils plus précis car vous êtes dans une situation trop complexe pour les outils présenté précédement.
+#Voici donc 2 méthode qui pourrait s'avérer utile.
+#Les sous règles : cet outil permet de renseigné un enchaînement de questions.
+#C'est très utile pour définir une réponse particulière du robot par rapport à ce que dit un humain.
+#Par exemple :
+#    Humain : "Bonjour Pepper"
+#    Pepper : "Bonjour Humain, tu veux un café ?
+#  Cas 1
+#    Humain : "Oui"
+#    Pepper : "Ben va t'en chercher un"
+#  Cas 2
+#    Humain : "Non"
+#    Pepper : "Dommage pour toi"
+#
+#Dans QiChat, pour avoir ce resultat on devra utiliser les sous règles
+#Voici le code correspondnat a l'exemple
+#u:("Bonjour")
+#Bonjour Humain, tu veux un café ?
+#    u1:("oui")
+#    Ben va t'en chercher un
+#    u1:("non")
+#    Dommage pour toi
+#
+#Les sous règles sont indiquer avec un chiffre qui suis le "u" pour indiquer le niveau de la sous règles.
+#On peut en effet créer une sous règle de sous règle
+#Par exemple :
+#u:("Bonjour")
+#Bonjour Humain, tu veux un café ?
+#    u1:("oui")
+#    Avec du sucre ?
+#        u2("non")
+#        Tu le prefere noir hein ?
+#        u2("oui")
+#        Ok
+#    u1:("non")
+#    Dommage pour toi
+#L'indentation n'est pas obligatoire mais aide a la relecture
+#
+#Voici le dernier point que je souhaite aborder
+#Les Tags et les Redirections:
+#Ces deux outils sont a utiliser ensemble, et permettent de rediriger le dialogue vers un texte existant
+#Par exemple, je veux que le robot liste ses cafés, directement, mais aussi comme suggestion quand on lui demande un café
+#Sans la redirection on aurait quelque chose comme çà
+#
+#    u:("Je veux la liste des café")
+#    La voici : Vanille, Caramelle, Fort, Leger, etc.
+#
+#    u:("Je veux un café")
+#    Très bien, voici : Vanille, Caramelle, Fort, Leger, etc.
+#
+#On remarque que je n'ai fait que recopier
+#Dans cet exemple le texte est court donc çà ne pose pas de problème
+#Mais que faire si le texte est très long ? Par exemple l'histoire de CMultiserv.
+#Et qu'en plus je suggère dans des sous règles plus tard de parler de ce texte long.
+#Je risque d'avoir beaucoup de recopie
+#Du coup plutot que de recopier je vais rediriger
+#Alors voilà comment çà marche :
+#le caractère "%" permet de tagger, c'est à dire de mettre un point de repère
+#et pour aller vers ce point on utilise la fonction ^gotoReactivat(Le nom du point)
+#
+#Voici donc notre exemple modifié:
+#
+#    u:("Je veux la liste des café") %ListeCafe
+#    La voici : Vanille, Caramelle, Fort, Leger, etc.
+#
+#    u:("Je veux un café")
+#    Très bien.
+#    ^gotoReactivate(ListeCafe)
+#
+#Remarquez que le Tag se place apres la question de l'humain
+#Et la fonction en fin de phrase, celle ci ce déclenche des son appel, 
+#Donc un texte qui serait après ne sera pas prononcé 
+#car le robot sera a la place de train de lire le texte vers lequel il a été redirigé
+#
+#Petits conseils d'utilisation : 
+#Ayez toujours des Tags avec des noms différerent, tout en gardant une certaine logique dans leur nom, vous avez des exemples dans ce document
+#Utilisez plutot la fonction de redirection pour aller vers un texte qui est au même niveau (ou sous niveau) ou vers le niveau au DESSUS(par exemple de "u1" vers "u", evitez de faire de "u1" vers "u2").
+
+
+########################################################################################################################################
+########################################################################################################################################
+
+#Acceuil
+#u:("{["Bonjour" "salut"]} {["Pepper"]}")
+#Je peut vous aider ?
+u:("oui")
+Avez vous rendez vous ?
+$Animation= "Question"
+    u1:("oui")
+    $Rdv="oui"
+    Avec qui ?
+        u2:("{["j'ai rendez vous avec" "avec"]} ["Cyril" "Cyril Marcer" "Marcer"]")
+        Cyril Marcer, c'est compris.
+        $Animation= "Affirmation"
+        $Rencontrer= "Cyril Marcer"
+        
+        Désirez vous un café pour patienter ?
+            u3:("oui")
+            cliquez sur ma tablette pour choisir votre café.
+            $AppCafe=1
+            $fin=1
+            u3:("non")
+            d'accord on s'occupe de vous, veuillez patienter sur les chaise en attendant, merci.
+            $Move=1
+            $fin=1
+        
+        u2:("{["j'ai rendez vous avec" "avec"]} ["Tattiana" "Tattiana Loffredo" "Loffredo"]")
+        Tattiana Loffredo, c'est compris.
+        $Animation= "Affirmation"
+        $Rencontrer= "Tattiana Loffredo"
+        
+        Désirez vous un café pour patienter ?
+            u3:("oui")
+            cliquez sur ma tablette pour choisir votre café.
+            $AppCafe=1
+            $fin=1
+            u3:("non")
+            d'accord on s'occupe de vous, veuillez patienter sur les chaise en attendant, merci.
+            $Move=1
+            $fin=1
+            
+    u1:("non")
+    $Rdv="non"
+    Qui désirez vous rencontrer ?
+        u2:("["Cyril" "Cyril Marcer" "Marcer"]")
+        Cyril Marcer, c'est compris.
+        $Animation= "Affirmation"
+        $Rencontrer= "Cyril Marcer"
+        
+        Désirez vous un café pour patienter ?
+            u3:("oui")
+            cliquez sur ma tablette pour choisir votre café.
+            $AppCafe=1
+            $fin=1
+            u3:("non")
+            d'accord on s'occupe de vous, veuillez patienter sur les chaise en attendant, merci.
+            $Move=1
+            $fin=1
+            
+        u2:("["Tattiana" "Tattiana Loffredo" "Loffredo"]")
+        Tatianna Loffredo, c'est compris.
+        $Animation= "Affirmation"
+        $Rencontrer= "Tattiana Loffredo"
+        
+        Désirez vous un café pour patienter ?
+            u3:("oui")
+            cliquez sur ma tablette pour choisir votre café.
+            $AppCafe=1
+            $fin=1
+            u3:("non")
+            d'accord on s'occupe de vous, veuillez patienter sur les chaise en attendant, merci.
+            $Move=1
+            $fin=1
+            
+u:("non")
+d'accord.
+$Animation= "Negation"
+$Aide=0
+$fin=1
+
+################################################################################
+#A propos du robot Questions diverses
+
+
+
