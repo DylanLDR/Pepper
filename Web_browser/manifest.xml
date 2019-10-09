@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.3" uuid="web_browser-9b52b3">
+ <names>
+  <name lang="en_US">web_browser</name>
+  <name lang="fr_FR"> navigateur</name>
+ </names>
+ <descriptions>
+  <description lang="en_US">google</description>
+  <description lang="fr_FR">google</description>
+ </descriptions>
+ <supportedLanguages>
+  <language>en_US</language>
+  <language>fr_FR</language>
+ </supportedLanguages>
+ <descriptionLanguages>
+  <language>en_US</language>
+  <language>fr_FR</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="behavior_1">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+  <dialogContent topicName="dialog_web_search" typeVersion="1.0">
+   <topic language="en_US" path="dialog_web_search/dialog_web_search_enu.top"/>
+   <topic language="fr_FR" path="dialog_web_search/dialog_web_search_frf.top"/>
+  </dialogContent>
+ </contents>
+</package>

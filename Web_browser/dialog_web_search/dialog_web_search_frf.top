@@ -1,0 +1,27 @@
+topic: ~dialog_web_search()
+language: frf
+
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+concept:(google)[internet google]
+concept:(navigateur)[~google le-navigateur]
+concept:(interogation)[peut-tu Est-ce-que-tu-peut Tu-peut Pourrais-tu]
+
+
+#Dans le sens demarrer une application
+concept:(demarre)[lance ouvre démarre]
+concept:(demarré)[lancé ouvrir démarré]
+
+concept:(connecter)[aller-sur te-connecter-a surfer-sur te-connecté-sur]
+concept:(confirmation)[ok d'accord c'est-parti]
+# Catching inputs and triggering outputs
+#u:(e:onStart) $onStopped=1
+
+u:(~interogation ~connecter ~google *)~confirmation^switchFocus(web_browser-9b52b3/behavior_1)
+u:(~interogation ~interogation ~connecter ~google *)~confirmation ^switchFocus(web_browser-9b52b3/behavior_1)
+u:(~demarre ~navigateur *)~confirmation ^switchFocus(web_browser-9b52b3/behavior_1)
+u:(~interogation ~demarré ~google *)~confirmation ^switchFocus(web_browser-9b52b3/behavior_1)
+
+# Replying to speech
+#u:(~hello) ~hello
