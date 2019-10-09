@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.5" uuid="photo_entreprise">
+ <descriptionLanguages>
+  <language>fr_FR</language>
+ </descriptionLanguages>
+ <contents>
+  <behaviorContent path="behavior_1">
+   <nature>interactive</nature>
+   <permissions/>
+  </behaviorContent>
+ </contents>
+</package>
