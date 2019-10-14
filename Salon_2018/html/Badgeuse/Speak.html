@@ -10,56 +10,69 @@
 
 	<script>
 		var session, web, retour;
-        var hostIPV4 = "164.254.171.140";
-        var hostIPV6 = "192.168.1.181";
+        var hostIPV4 = "164.254.171.140"; 
+        var hostIPV6 = "192.168.1.181"; //Adresse ip utiliser pour la connexion au robot
 
         /*Récuperation de la variable URL "[url]+?nom=test"*/
-        var position = window.location.href.indexOf('?');
-        var fin_url =window.location.href.substring(position + 1);
-        var SayName = fin_url.substr(4,);
+        var position = window.location.href.indexOf('?'); //on localise le caractère "?" dans l'url
+        var fin_url =window.location.href.substring(position + 1); // on recupere la fin de l'url ce qui ce trouve apres le "?"
+        var SayName = fin_url.substr(4,); //On met en variable seulement ce qui ce trouve apres "nom=" donc ce qu'il y a apres ces 4 caratère, jusqu'a la fin.
 
+        /*Fonction qui renvoi dans les logs si on s'est bien connecté*/
 		function connected() {
 			console.log("connected");
 		}
 
+        /*Fonction qui renvoi dans les logs si on s'est bien déconnecté*/
 		function disconnected() {
 			console.log("disconnected");
 		}	
 
+		/*Fonction qui sert a récuperer le prénom des personne qui badge*/
 		function dialogue() {
-		var configuration = {"bodyLanguageMode":"contextual"};
+		var configuration = {"bodyLanguageMode":"contextual"}; //test de la box SayAnimation
 
 			this.service("ALTabletService").then(function (ALTabletService){
-    			ALTabletService.showWebview("http://root:root@192.168.1.181/apps/salon_2018-af8e72/");
+    			ALTabletService.showWebview("http://root:root@192.168.1.181/apps/salon_2018-af8e72/"); //affichage de l'application tablette
     		});	
-    	
 
-		/*	this.service("ALBehaviorManagerProxy").then(function (ALBehaviorManagerProxy){
-    			ALBehaviorManagerProxy.runBehavior("reboot_salon-e70b8e/behavior_1");
-    		});*/	
-		
+			/*si le prenom a dire est egale a 1 nous somme dans un cas de démarrage de la badgeuse*/
 			if(SayName == "1"){
 				this.service("ALAnimatedSpeech").then(function (ALAnimatedSpeech){
-    				ALAnimatedSpeech.say("Badgeuse démarré avec succès !", configuration);
+    				ALAnimatedSpeech.say("Badgeuse démarré avec succès !", configuration); //le robot vas donc dire Badgeuse démarrer avec succes
 	    		});				
 			}
+			/*si le prenom a dire est egale a 2 nous somme dans un cas de bug de passage, la personne a badger deux fois ou le capteur RFID a buguer*/			
 			else if(SayName == "2"){
 				this.service("ALTextToSpeech").then(function (ALTextToSpeech){
     				ALTextToSpeech.say("érreur, tu as déja badgé. Si ce n'est pas le cas, utilise le badge bleu et repasse ta carte.");
 	    		});				
 			}
+			/*Dans le cas ou prenom est egale a debug on sais que le badge bleu est passer pour resoudre le bug de passage*/
 			else if(SayName == "debug"){
 				this.service("ALTextToSpeech").then(function (ALTextToSpeech){
-    				ALTextToSpeech.say("Tu peux repasser ta carte.");
+    				ALTextToSpeech.say("Tu peux repasser ta carte."); //l'utilisateur peut donc repasser sa carte sans soucis
     			});				
 			}
 			else {
+				/*Test de recuparation de l'heur du robot pour la dire quand on badge (ECHEC)*/
+				/*var current_time;
+    			this.service("time_point").then(function (time_point){
+    				current_time = str(time_point.qi.Clock.now());
+    			});
+    			alert(current_time);*/
+
+    			/*Vu que je n'est pas reussi a recuprer l'heur interne du robot j'ai utiliser la fonction memoir pour accedes au variable du programme*/
+    			this.service("ALMemory").then(function (ALMemory) {
+        			ALMemory.raiseEvent("Badgeuse", 1); //je renvoi "1" sur la variable "Badgeuse" ce qui me permet de declancher l'heur vocale
+        		});
 				this.service("ALTextToSpeech").then(function (ALTextToSpeech){
-    				ALTextToSpeech.say(SayName);
+    				ALTextToSpeech.say(SayName); //permet de dire le prenom ce trouvant dans l'url 
     			});	
 			}		
 		}
 
+		/*Fonction prncipale (MAIN)*/
 		QiSession(function(session) {
 			connected();
 			dialogue();
